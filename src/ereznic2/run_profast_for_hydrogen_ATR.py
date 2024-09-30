@@ -63,6 +63,8 @@ def run_profast_for_hydrogen_ATR(atb_year,site_name,site_location,policy_case,NG
     year2018_CEPCI = 603.1
     year2020_CEPCI = 596.2 
     year2022_CEPCI = 816.0
+    year2008_CEPCI = 575.4
+    year2011_CEPCI = 585.7 
     year2020_CPI = 271
     year2022_CPI = 292.7
     
@@ -156,23 +158,23 @@ def run_profast_for_hydrogen_ATR(atb_year,site_name,site_location,policy_case,NG
     if site_location == 'Site 1': # Indiana
         land_cost = 7072 * year2022_CPI/year2020_CPI # $2022/acre 
         water_cost = 0.0045 * year2022_CPI/year2020_CPI #2022$/gal
-        CO2_transport_capex = 10.37 * year2022_CEPCI/year2020_CEPCI #2022$/tonne CO2
-        CO2_storage_capex = 12.95 * year2022_CEPCI/year2020_CEPCI #2022$/tonneCO2
+        CO2_transport_capex = 7.7 * year2022_CEPCI/year2011_CEPCI #2022$/tonne CO2
+        CO2_storage_capex = 8.55 * year2022_CEPCI/year2008_CEPCI #2022$/tonneCO2 Mount Simon 6 formation
     elif site_location == 'Site 2': # Texas
         land_cost = 2343 * year2022_CPI/year2020_CPI # $2022/acre
         water_cost = 0.00478 * year2022_CPI/year2020_CPI  #2022$/gal
-        CO2_transport_capex = 15.02 * year2022_CEPCI/year2020_CEPCI #2022$/tonne CO2
-        CO2_storage_capex = 18.06 * year2022_CEPCI/year2020_CEPCI #2022$/tonneCO2
+        CO2_transport_capex = 9.35 * year2022_CEPCI/year2011_CEPCI #2022$/tonne CO2
+        CO2_storage_capex = 11.87 * year2022_CEPCI/year2008_CEPCI #2022$/tonneCO2 Canyon 3 formation
     elif site_location == 'Site 3': # Iowa
         land_cost = 8310 * year2022_CPI/year2020_CPI  # $2022/acre
         water_cost = 0.00291 * year2022_CPI/year2020_CPI #2022$/gal
-        CO2_transport_capex = 17.06 * year2022_CEPCI/year2020_CEPCI #2022$/tonne CO2
-        CO2_storage_capex = 13.32 * year2022_CEPCI/year2020_CEPCI #2022$/tonneCO2
+        CO2_transport_capex = 12.94 * year2022_CEPCI/year2011_CEPCI #2022$/tonne CO2
+        CO2_storage_capex = 8.78 * year2022_CEPCI/year2008_CEPCI #2022$/tonneCO2 Mount Simon 3 formation
     elif site_location == 'Site 4': # Mississippi
         land_cost = 2652 * year2022_CPI/year2020_CPI # $2022/acre
         water_cost = 0.00409 * year2022_CPI/year2020_CPI  #2022$/gal
-        CO2_transport_capex = 2.80 * year2022_CEPCI/year2020_CEPCI #2022$/tonne CO2
-        CO2_storage_capex = 12.99 * year2022_CEPCI/year2020_CEPCI #2022$/tonneCO2
+        CO2_transport_capex = 2.08 * year2022_CEPCI/year2011_CEPCI #2022$/tonne CO2
+        CO2_storage_capex = 8.59 * year2022_CEPCI/year2008_CEPCI #2022$/tonneCO2 Lower Tuscaloosa 1 formation
     # elif site_name == 'WY': # Wyoming
     #     land_cost =751 #$2020/acre
     #     water_cost = 0.00376 # 2020$/gal
@@ -180,8 +182,8 @@ def run_profast_for_hydrogen_ATR(atb_year,site_name,site_location,policy_case,NG
     elif site_location == 'Site 5': # Minnesota 
         land_cost = 5437 * year2022_CPI/year2020_CPI  # 2022$/acre
         water_cost=0.00291 * year2022_CPI/year2020_CPI  #2022$/gal
-        CO2_transport_capex = 27.26 * year2022_CEPCI/year2020_CEPCI #2022$/tonne CO2
-        CO2_storage_capex = 25.76 * year2022_CEPCI/year2020_CEPCI #2022$/tonneCO2
+        CO2_transport_capex = 20.52 * year2022_CEPCI/year2011_CEPCI #2022$/tonne CO2
+        CO2_storage_capex = 17.06 * year2022_CEPCI/year2008_CEPCI #2022$/tonneCO2 Basal Cambrian formation
         
     # Should connect these to something (AEO, Cambium, etc.)
     if NG_price_case == 'default':
