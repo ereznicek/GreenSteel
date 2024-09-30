@@ -64,6 +64,8 @@ def run_profast_for_hydrogen_SMR(atb_year,site_name,site_location,policy_case,NG
     model_year_CEPCI = 816
     year2018_CEPCI = 603.1
     year2020_CEPCI = 596.2 
+    year2008_CEPCI = 575.4
+    year2011_CEPCI = 585.7 
 
     cpi_equationyear = 271
     cpi_modelyear = 292.7
@@ -163,23 +165,23 @@ def run_profast_for_hydrogen_SMR(atb_year,site_name,site_location,policy_case,NG
     if site_location == 'Site 1': # Indiana
         land_cost = cpi_ratio*7072 # $2020/acre 
         water_cost = cpi_ratio*0.0045 #$/gal
-        CO2_transport_capex = model_year_CEPCI/year2020_CEPCI*10.37 #2020$/tonne CO2
-        CO2_storage_capex = model_year_CEPCI/year2020_CEPCI*12.95 #2020$/tonneCO2
+        CO2_transport_capex = model_year_CEPCI/year2011_CEPCI*7.58 #2020$/tonne CO2
+        CO2_storage_capex = model_year_CEPCI/year2008_CEPCI*8.45 #2020$/tonneCO2
     elif site_location == 'Site 2': # Texas
         land_cost = cpi_ratio*2343 # $2020/acre
         water_cost = cpi_ratio*0.00478 #2020$/gal
-        CO2_transport_capex = model_year_CEPCI/year2020_CEPCI*15.02 #2020$/tonne CO2
-        CO2_storage_capex = model_year_CEPCI/year2020_CEPCI*18.06 #2020$/tonneCO2
+        CO2_transport_capex = model_year_CEPCI/year2011_CEPCI*9.20 #2020$/tonne CO2
+        CO2_storage_capex = model_year_CEPCI/year2008_CEPCI*11.73 #2020$/tonneCO2
     elif site_location == 'Site 3': # Iowa
         land_cost = cpi_ratio*8310 # $2020/acre
         water_cost = cpi_ratio*0.00291 #2020$/gal
-        CO2_transport_capex = model_year_CEPCI/year2020_CEPCI*17.06 #2020$/tonne CO2
-        CO2_storage_capex = model_year_CEPCI/year2020_CEPCI*13.32 #2020$/tonneCO2
+        CO2_transport_capex = model_year_CEPCI/year2011_CEPCI*12.73 #2020$/tonne CO2
+        CO2_storage_capex = model_year_CEPCI/year2008_CEPCI*8.67 #2020$/tonneCO2
     elif site_location == 'Site 4': # Mississippi
         land_cost = cpi_ratio*2652 # $2020/acre
         water_cost = cpi_ratio*0.00409 #2020$/gal
-        CO2_transport_capex = model_year_CEPCI/year2020_CEPCI*2.80 #2020$/tonne CO2
-        CO2_storage_capex = model_year_CEPCI/year2020_CEPCI*12.99 #2020$/tonneCO2
+        CO2_transport_capex = model_year_CEPCI/year2011_CEPCI*2.04 #2020$/tonne CO2
+        CO2_storage_capex = model_year_CEPCI/year2008_CEPCI*8.5 #2020$/tonneCO2
     # elif site_name == 'WY': # Wyoming
     #     land_cost =751 #$2020/acre
     #     water_cost = 0.00376 # 2020$/gal
@@ -187,8 +189,8 @@ def run_profast_for_hydrogen_SMR(atb_year,site_name,site_location,policy_case,NG
     elif site_location == 'Site 5': # Minnesota 
         land_cost = cpi_ratio*5437# $2020/acre
         water_cost=cpi_ratio*0.00291 #$/gal
-        CO2_transport_capex = model_year_CEPCI/year2020_CEPCI*27.26#2020$/tonne CO2
-        CO2_storage_capex = model_year_CEPCI/year2020_CEPCI*25.76 #2020$/tonneCO2
+        CO2_transport_capex = model_year_CEPCI/year2011_CEPCI*20.2#2020$/tonne CO2
+        CO2_storage_capex = model_year_CEPCI/year2008_CEPCI*16.87 #2020$/tonneCO2
         
     # Should connect these to something (AEO, Cambium, etc.)
     if NG_price_case == 'default':
