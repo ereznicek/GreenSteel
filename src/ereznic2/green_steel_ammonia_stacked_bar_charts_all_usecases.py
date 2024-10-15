@@ -16,7 +16,8 @@ electrolysis_directory = 'Results_main/Fin_sum'
 sensitivity_directory = 'Results_sensitivity/Fin_sum'
 smr_directory = 'Results_SMR/Fin_sum'
 atr_directory = 'REsults_ATR/Fin_sum'
-plot_directory = 'Plots'
+#plot_directory = 'Plots'
+plot_directory = 'Plots-for-others'
 
 
 # Retail price of interest ['retail-flat','wholesale']
@@ -117,18 +118,25 @@ tickfontsize = 16
 resolution = 150
 
 locations = [
-            'IN',
+            #'IN',
             'TX',
-            'IA',
-            'MS',
-            'MN'
+            #'IA',
+            #'MS',
+            #'MN'
              ]
 years = [
-    '2022',
-    '2025',
+    #'2022',
+    #'2025',
     '2030',
-    '2035'
+    #'2035'
     ]
+
+production_cost = False
+annotate_plots = True
+show_arrows = True
+
+if production_cost == True:
+    plot_subdirectory = 'Stacked_Plots_all_technologies_production'
 
 for site in locations:
     for atb_year in years:
@@ -151,6 +159,11 @@ for site in locations:
 
         site_year_electrolysis_sensitivity = financial_summary_electrolysis_sensitivity.loc[(financial_summary_electrolysis_sensitivity['Site']==site) & (financial_summary_electrolysis_sensitivity['Year']==atb_year) & (financial_summary_electrolysis_sensitivity['Policy Option']=='no-policy')]
         site_year_electrolysis_sensitivity['CCS Case'] = 'NA'
+
+        if production_cost == True:
+            site_year_electrolysis['LCOH ($/kg)'] = site_year_electrolysis['LCOH ($/kg)'] - site_year_electrolysis['LCOH: Compression & storage ($/kg)'] - site_year_electrolysis['LCOH: Bulk H2 Transmission ($/kg)']
+            site_year_electrolysis_sensitivity['LCOH ($/kg)'] = site_year_electrolysis_sensitivity['LCOH ($/kg)'] - site_year_electrolysis_sensitivity['LCOH: Compression & storage ($/kg)'] - site_year_electrolysis_sensitivity['LCOH: Bulk H2 Transmission ($/kg)']
+
 
         # Calculate SMR error bars
         site_year_smr.loc[(site_year_smr['Policy Option']=='no-policy') & (site_year_smr['NG price case']=='default'),'LCOH NG price sensitivity low ($/kg)'] = \
@@ -355,14 +368,23 @@ for site in locations:
         lcoh_base_policy_savings = np.array(site_year_combined['LCOH: Base policy savings ($/kg)'].values.tolist())
         lcoh_max_policy_savings = np.array(site_year_combined['LCOH: Max policy savings ($/kg)'].values.tolist())
 
+        lcoh_nopolicy_list = site_year_combined['LCOH ($/kg)'].values.tolist()
+
+        lcoh_nopolicy_strings = [str(round(i,2)) for i in lcoh_nopolicy_list]
+        x_ax = [0,1,2,3,4,5]
+
         width = 0.5
         #fig, ax = plt.subplots()
         fig, ax = plt.subplots(1,1,figsize=(9,6), dpi= resolution)
 
         #ax.bar(labels,lcoh_nopolicy,label='Without Policy',edgecolor=['midnightblue','darkmagenta','goldenrod','forestgreen','darkorange','deepskyblue','darkred','cyan','salmon'],color=['midnightblue','darkmagenta','goldenrod','forestgreen','darkorange','deepskyblue','darkred','cyan','salmon'])
         ax.bar(labels,lcoh_nopolicy,label='Without Policy',edgecolor=['midnightblue','darkmagenta','darkred','goldenrod','forestgreen','deepskyblue'],color=['midnightblue','darkmagenta','darkred','goldenrod','forestgreen','deepskyblue'])
-        ax.plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_base_policy_savings, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax.plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_max_policy_savings, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        if annotate_plots:
+            for j in range(len(labels)):
+                ax.annotate(lcoh_nopolicy_strings[j],xy=(x_ax[j]-width*3/4,lcoh_nopolicy[j]+0.15),xycoords='data',fontname = font,fontsize = 12)
+        if show_arrows:
+            ax.plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_base_policy_savings, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
+            ax.plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_max_policy_savings, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
         
         # Plot NG error bars
         if atb_year != '2020':
@@ -370,9 +392,10 @@ for site in locations:
 
         arrow_top = np.zeros(len(labels))
         ax.errorbar(labels,lcoh_nopolicy,yerr=[arrow_top,arrow_top], fmt='none',elinewidth=1,ecolor='black',capsize=10,markeredgewidth=1.25) 
-        for j in range(len(labels)): 
-            ax.arrow(j,lcoh_nopolicy[j],0,-1*lcoh_base_policy_savings[j],head_width=0.1,head_length=0.25,length_includes_head=True,color='black',linestyle='-')
-            ax.arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.1,head_length=0.25,length_includes_head=True,color='dimgray')
+        if show_arrows:
+            for j in range(len(labels)): 
+                ax.arrow(j,lcoh_nopolicy[j],0,-1*lcoh_base_policy_savings[j],head_width=0.1,head_length=0.25,length_includes_head=True,color='black',linestyle='-')
+                ax.arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.1,head_length=0.25,length_includes_head=True,color='dimgray')
         ax.axhline(y=0, color='k', linestyle='-',linewidth=1.5)
         ax.axhline(y=lcoh_nopolicy[0], color='k', linestyle='--',linewidth=1.5)
         barbottom = lcoh_nopolicy
@@ -494,8 +517,9 @@ for site in locations:
         #ax.errorbar(labels,barbottom-integration_savings-policy_savings,yerr=[error_low,error_high], fmt='none',elinewidth=[0,0,0,0,0,1],ecolor='none',capsize=6,markeredgewidth=1)  
         #ax.errorbar(labels[5],barbottom[5]-integration_savings[5]-policy_savings[5],yerr=[[error_low[5]],[error_high[5]]],fmt='none',elinewidth=1,capsize=6,markeredgewidth=1,ecolor='black')                                        
 
-        ax.plot([0,1,2,3,4,5], steel_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax.plot([0,1,2,3,4,5], steel_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        if show_arrows:
+            ax.plot([0,1,2,3,4,5], steel_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
+            ax.plot([0,1,2,3,4,5], steel_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
 
         # Plot error bars
         if atb_year != '2020':
@@ -503,9 +527,10 @@ for site in locations:
 
         arrow_top = np.zeros(len(labels))
         ax.errorbar(labels,steel_price_no_policy,yerr=[arrow_top,arrow_top],fmt='none',elinewidth=1,ecolor='black',capsize=10,markeredgewidth=1.25)
-        for j in range(len(labels)):
-            ax.arrow(j,barbottom[j],0,-1*steel_price_base_policy_savings[j],head_width=0.1,head_length=35,length_includes_head=True,color='black')
-            ax.arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=35,length_includes_head=True,color='dimgray')
+        if show_arrows:
+            for j in range(len(labels)):
+                ax.arrow(j,barbottom[j],0,-1*steel_price_base_policy_savings[j],head_width=0.1,head_length=35,length_includes_head=True,color='black')
+                ax.arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=35,length_includes_head=True,color='dimgray')
 
         ax.axhline(y=barbottom[0], color='k', linestyle='--',linewidth=1.5)
 
@@ -621,9 +646,9 @@ for site in locations:
         #ax.bar(labels,policy_savings_ammonia,width,bottom=barbottom,label = 'Policy Savings',color='white', edgecolor = 'sandybrown',hatch='.....')
         #barbottom=barbottom+policy_savings_ammonia
 
-
-        ax.plot([0,1,2,3,4,5], ammonia_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax.plot([0,1,2,3,4,5], ammonia_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        if show_arrows:
+            ax.plot([0,1,2,3,4,5], ammonia_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
+            ax.plot([0,1,2,3,4,5], ammonia_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
 
         # Plot NG error bars
         if atb_year != '2020':
@@ -631,9 +656,10 @@ for site in locations:
 
         arrow_top = np.zeros(len(labels))
         ax.errorbar(labels,barbottom,yerr=[arrow_top,arrow_top],fmt='none',elinewidth=1,ecolor='black',capsize=10,markeredgewidth=1.25)
-        for j in range(len(labels)):
-            ax.arrow(j,barbottom[j],0,-1*ammonia_price_base_policy_savings[j],head_width=0.1,head_length=0.08,length_includes_head=True,color='black')
-            ax.arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0.08,length_includes_head=True,color='dimgray')
+        if show_arrows:
+            for j in range(len(labels)):
+                ax.arrow(j,barbottom[j],0,-1*ammonia_price_base_policy_savings[j],head_width=0.1,head_length=0.08,length_includes_head=True,color='black')
+                ax.arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0.08,length_includes_head=True,color='dimgray')
         #ax.errorbar(labels,barbottom-policy_savings_ammonia,yerr=[error_low,error_high], fmt='none',elinewidth=[0,0,0,0,0,1],ecolor='none',capsize=6,markeredgewidth=1)                                        
         #ax.errorbar(labels[5],barbottom[5]-policy_savings_ammonia[5],yerr=[[error_low[5]],[error_high[5]]],fmt='none',elinewidth=1,capsize=6,markeredgewidth=1,ecolor='black')                                        
         ax.axhline(y=0.0, color='k', linestyle='-',linewidth=1.5)

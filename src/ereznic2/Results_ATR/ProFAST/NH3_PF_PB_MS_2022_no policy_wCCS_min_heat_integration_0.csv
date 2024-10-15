@@ -15,7 +15,7 @@
 13,Operating Expenses,Maintenance Cost,0.0008994527646492345
 14,Financing cash outflow,Boiler and Steam Turbine,0.0009711574132529504
 15,Operating Expenses,Installation cost,0.001256302046185137
-16,Operating Expenses,Cash on hand reserve,0.0017003133272639305
+16,Operating Expenses,Cash on hand reserve,0.001668678799231002
 17,Financing cash outflow,Haber Bosch,0.0025611596134998945
 18,Operating Expenses,Iron based catalyst,0.0027886190660786365
 19,Financing cash outflow,Air Separation by Cryogenic,0.0030919022023188562
@@ -25,18 +25,18 @@
 23,Operating Expenses,Property tax and insurance,0.006403255912597562
 24,Financing cash outflow,Interest expense,0.007720583430915295
 25,Operating Expenses,Electricity,0.00928508086140414
-26,Financing cash outflow,Income taxes payable,0.00992031673337251
+26,Financing cash outflow,Income taxes payable,0.009890312448690307
 27,Operating Expenses,Labor Cost,0.019621969214428995
-28,Financing cash outflow,Dividends paid,0.035233970451212716
-29,Operating Expenses,Hydrogen,0.5483174020220315
+28,Financing cash outflow,Dividends paid,0.035175950984303754
+29,Operating Expenses,Hydrogen,0.536961119378051
 30,Operating Revenue,Take or pay revenue,0.0
 31,Operating Revenue,Incidental revenue,0.0
 32,Operating Revenue,Oxygen byproduct,0.0
 33,Financing cash inflow,One time capital incentive,0.0
 34,Financing cash inflow,Annual operating incentives,0.0
 35,Operating Revenue,Sale of non-depreciable assets,0.00022799965503308213
-36,Financing cash inflow,Monetized tax losses,0.0005958458659834959
-37,Operating Revenue,Cash on hand recovery,0.0017003133272639303
+36,Financing cash inflow,Monetized tax losses,0.000597989029175082
+37,Operating Revenue,Cash on hand recovery,0.0016686787992310017
 38,Financing cash inflow,Inflow of debt,0.0046745604040859924
-39,Financing cash inflow,Inflow of equity,0.009589137819374998
-40,Operating Revenue,Ammonia sales,0.6458658036462657
+39,Financing cash inflow,Inflow of equity,0.009623863864474889
+40,Operating Revenue,Ammonia sales,0.6343846280424024

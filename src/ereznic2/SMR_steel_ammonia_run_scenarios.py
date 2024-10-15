@@ -25,7 +25,7 @@ parent_path = os.path.abspath('')
 dir1 = os.getcwd()
 dirin_el_prices = 'H2_Analysis/'
 el_prices_files = glob.glob(os.path.join(dir1 + dirin_el_prices, 'annual_average_retail_prices.csv'))
-renewable_cost_path = ('H2_Analysis/green_steel_site_renewable_costs_ATB_aug2023.xlsx')
+renewable_cost_path = ('H2_Analysis/green_steel_site_renewable_costs_ATB_aug2024.xlsx')
 #fin_sum_dir = parent_path + '/Results_SMR'
 #price_breakdown_dir = parent_path + '/H2_Analysis/Phase1B/SMR_ProFAST_price/'
 

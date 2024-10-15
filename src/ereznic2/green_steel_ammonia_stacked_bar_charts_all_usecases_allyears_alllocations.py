@@ -114,7 +114,7 @@ locations = [
             'MN'
              ]
 years = [
-    #'2020',
+    '2022',
     '2025',
     '2030',
     '2035'
@@ -500,7 +500,7 @@ for axi1,site in enumerate(locations):
             error_lcos_low.append(max(0,elec_error_low[j]))
             error_lcos_high.append(max(0,elec_error_high[j]))
 
-        width = 0.5
+        width = 0.75
         ax1[axi1,axi2].bar(labels,total_cap_cost,width,label='Total CAPEX',edgecolor='dimgray',color='dimgrey')
         barbottom=total_cap_cost
         ax1[axi1,axi2].bar(labels,fixedom_cost,width,bottom=barbottom,label = 'Fixed O&M cost',edgecolor='steelblue',color='deepskyblue')
@@ -630,7 +630,7 @@ for axi1,site in enumerate(locations):
             error_lcoa_low.append(max(0,elec_error_low[j]))
             error_lcoa_high.append(max(0,elec_error_high[j]))
 
-        width = 0.5
+        width = 0.75
         #fig, ax = plt.subplots()
         #fig, ax = plt.subplots(1,1,figsize=(9,6), dpi= resolution)
 #        ax.bar(labels,oxygenbyproduct_revenue,width,label='Oxygen byproduct revenue')

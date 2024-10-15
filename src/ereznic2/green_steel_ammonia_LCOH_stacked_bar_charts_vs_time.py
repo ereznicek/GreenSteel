@@ -72,6 +72,8 @@ location_strings = [
 # True if you want to plot quad of four locations. Must select four locations above
 plot_quad = True
 
+annotate_plots = True
+
 for electrolysis_case in electrolysis_cases:
     for grid_case in grid_cases:
         for hybrids_case in hybrids_cases:
@@ -191,6 +193,14 @@ for electrolysis_case in electrolysis_cases:
                 ax.bar(labels,taxes_and_financial[site],width,bottom=barbottom,label = 'Taxes and Finances',edgecolor = 'goldenrod', color='goldenrod')
                 barbottom=barbottom+taxes_and_financial[site]
 
+                barbottom_list = list(barbottom)
+                barbottom_strings = [str(round(i,2)) for i in barbottom]
+
+                # Annotate bar tops
+                if annotate_plots:
+                    for j in range(len(labels)):
+                        ax.annotate(barbottom_strings[j],xy=(plot_xaxis[j]-width*1/4,barbottom_list[j]+0.2),xycoords='data',fontname = 'Arial',fontsize = 8)
+
                 # Plot policy savings
                 lcoh_nopolicy[site] = np.array(fin_sum_usecase.loc[fin_sum_usecase['Site']==site,'LCOH ($/kg)'].values.tolist())
                 lcoh_base_policy_savings[site] = np.array(fin_sum_usecase.loc[fin_sum_usecase['Site']==site,'LCOH: Base policy savings ($/kg)'].values.tolist())
@@ -275,6 +285,14 @@ for electrolysis_case in electrolysis_cases:
 
                     ax[axi1,axi2].bar(labels,taxes_and_financial[site],width,bottom=barbottom,label = 'Taxes and Finances',edgecolor = 'goldenrod', color='goldenrod')
                     barbottom=barbottom+taxes_and_financial[site]
+
+                    barbottom_list = list(barbottom)
+                    barbottom_strings = [str(round(i,2)) for i in barbottom]
+
+                    # Annotate bar tops
+                    if annotate_plots:
+                        for j in range(len(labels)):
+                            ax[axi1,axi2].annotate(barbottom_strings[j],xy=(plot_xaxis[j]-width*1/4,barbottom_list[j]+0.2),xycoords='data',fontname = 'Arial',fontsize = 12)
 
                     # Plot policy savings
                     ax[axi1,axi2].plot(plot_xaxis, lcoh_nopolicy[site]-lcoh_base_policy_savings[site], color='black', marker='o', linestyle='none', markersize=4,label='Base Policy')

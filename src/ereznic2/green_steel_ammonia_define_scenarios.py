@@ -21,7 +21,7 @@ from green_steel_ammonia_run_scenarios import batch_generator_kernel
 project_path = os.path.abspath('')
 hopp_path = os.path.dirname(os.path.abspath(hopp.__file__))
 
-results_dir_name = 'Results_main'
+results_dir_name = 'Results_test'
 
 results_dir = os.path.join(project_path, "H2_Analysis", "results")
 fin_sum_dir = os.path.join(project_path, results_dir_name, "Fin_sum")
@@ -64,7 +64,7 @@ save_hybrid_plant_yaml = True # hybrid_plant requires special processing of the 
 save_model_input_yaml = True # saves the inputs for each model/major function
 save_model_output_yaml = True # saves the outputs for each model/major function
 
-print_toggle =False
+print_toggle =True
 
 # Target steel production rate. Note that this is the production after taking into account
 # steel plant capacity factor. E.g., if CF is 0.9, divide the number below by 0.9 to get
@@ -75,25 +75,25 @@ if __name__ == '__main__':
 #-------------------- Define scenarios to run----------------------------------
 
     atb_years = [
-                2022,
-                2025,
+                #2022,
+                #2025,
                 2030,
-                2035
+                #2035
                 ]
 
     policy = {
         'no-policy': {'Wind ITC': 0, 'Wind PTC': 0, "H2 PTC": 0, 'Storage ITC': 0},
-        'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
-        'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
+        #'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
+        #'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
     }
 
 
     site_selection = [
-                    'Site 1',
+                    #'Site 1',
                     'Site 2',
-                    'Site 3',
-                    'Site 4',
-                    'Site 5'
+                    #'Site 3',
+                    #'Site 4',
+                    #'Site 5'
                     ]
 
     electrolysis_cases = [
@@ -108,8 +108,8 @@ if __name__ == '__main__':
                                 ]
 
     grid_connection_cases = [
-                            #'off-grid',
-                            'grid-only',
+                            'off-grid',
+                            #'grid-only',
                             #'hybrid-grid'
                             ]
 
@@ -120,7 +120,7 @@ if __name__ == '__main__':
                             ]
 
     num_pem_stacks= 6 # Doesn't actually do anything
-    run_solar_param_sweep=False
+    run_solar_param_sweep=True
 #---- Create list of arguments to pass to batch generator kernel --------------
     arg_list = []
     for i in policy:
@@ -151,7 +151,7 @@ if __name__ == '__main__':
                                     energy_profile_dir = os.path.join(project_path, "Results_RODeO", "Profiles")
                                     price_breakdown_dir = os.path.join(project_path, "Results_RODeO", "ProFAST") 
                                     
-                                #if (site_location == 'Site 3' and electrolyzer_cost_case == 'Low' and atb_year == 2030) or (site_location == 'Site 3' and electrolyzer_cost_case == 'High' and atb_year in [2025,2035])  or (site_location == 'Site 4' and electrolyzer_cost_case == 'Low' and atb_year == 2035):
+                                #if (site_location == 'Site 3' and electrolyzer_cost_case == 'Low') or (atb_year==2022):
                                 arg_list.append([policy, i, atb_year, site_location, electrolysis_scale,run_RODeO_selector,floris,\
                                                 grid_connection_scenario,grid_price_scenario,\
                                                 direct_coupling,electrolyzer_cost_case,electrolyzer_degradation_power_increase,wind_plant_degradation_power_decrease,\
@@ -162,5 +162,5 @@ if __name__ == '__main__':
         batch_generator_kernel(arg_list[runs])
     []
 # ------------------ Run HOPP-RODeO/PyFAST Framework to get LCOH ---------------
-    # with Pool(processes=12,maxtasksperchild=1) as pool:
+    # with Pool(processes=2,maxtasksperchild=1) as pool:
     #         pool.map(batch_generator_kernel, arg_list)

@@ -15,7 +15,7 @@
 13,Operating Expenses,Maintenance Cost,0.0008994527646492345
 14,Financing cash outflow,Boiler and Steam Turbine,0.0009711574132529504
 15,Operating Expenses,Installation cost,0.001256302046185137
-16,Operating Expenses,Cash on hand reserve,0.0019259544303022855
+16,Operating Expenses,Cash on hand reserve,0.0018924393972197008
 17,Financing cash outflow,Haber Bosch,0.0025611596134998945
 18,Operating Expenses,Iron based catalyst,0.002581878260701437
 19,Financing cash outflow,Air Separation by Cryogenic,0.0030919022023188562
@@ -25,18 +25,18 @@
 23,Operating Expenses,Property tax and insurance,0.006403255912597562
 24,Financing cash outflow,Interest expense,0.007720583430915295
 25,Operating Expenses,Electricity,0.0095028260750179
-26,Financing cash outflow,Income taxes payable,0.010282322553062165
+26,Financing cash outflow,Income taxes payable,0.010250534672658317
 27,Operating Expenses,Labor Cost,0.019621969214428995
-28,Financing cash outflow,Dividends paid,0.036003109930988084
-29,Operating Expenses,Hydrogen,0.6293408035148333
+28,Financing cash outflow,Dividends paid,0.03594164151423591
+29,Operating Expenses,Hydrogen,0.6173094500483927
 30,Operating Revenue,Take or pay revenue,0.0
 31,Operating Revenue,Incidental revenue,0.0
 32,Operating Revenue,Oxygen byproduct,0.0
 33,Financing cash inflow,One time capital incentive,0.0
 34,Financing cash inflow,Annual operating incentives,0.0
 35,Operating Revenue,Sale of non-depreciable assets,0.00022799965503308213
-36,Financing cash inflow,Monetized tax losses,0.0005992181510463205
-37,Operating Revenue,Cash on hand recovery,0.0019259544303022855
+36,Financing cash inflow,Monetized tax losses,0.0006014887139323098
+37,Operating Revenue,Cash on hand recovery,0.0018924393972197008
 38,Financing cash inflow,Inflow of debt,0.0046745604040859924
-39,Financing cash inflow,Inflow of equity,0.009323618158459288
-40,Operating Revenue,Ammonia sales,0.7282929574763941
+39,Financing cash inflow,Inflow of equity,0.009360408482915484
+40,Operating Revenue,Ammonia sales,0.7161292868254552
