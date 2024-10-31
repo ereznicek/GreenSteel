@@ -170,8 +170,8 @@ def set_electrolyzer_info(hopp_dict, atb_year, electrolysis_scale,electrolyzer_c
         electrolyzer_energy_kWh_per_kg = 54.61
 
         # Centralized costs and scales for 2020
-        component_costs_centralized = {'Stack':450*CEPCI_ratio,'Power Electronics':200*CEPCI_ratio,'BOP':250*CEPCI_ratio,'H2 Conditioning':100*CEPCI_ratio}
-        component_scales_centralized = {'Stack':1000,'Power Electronics':1000,'BOP':1000,'H2 Conditioning':1000}
+        component_costs_centralized = {'Stack':615.9,'Power Electronics':183.1,'BOP':221.6,'H2 Conditioning':71.9}
+        component_scales_centralized = {'Stack':1000,'Power Electronics':5000,'BOP':5000,'H2 Conditioning':5000}
         component_scales_distributed = {'Stack':1000,'Power Electronics':1000,'BOP':1000,'H2 Conditioning':1000}
 
         # Stack durability for 2020
@@ -186,16 +186,16 @@ def set_electrolyzer_info(hopp_dict, atb_year, electrolysis_scale,electrolyzer_c
 
         # Centralized costs and scales for 2025
         if electrolyzer_cost_case == 'Low' or electrolyzer_cost_case == 'low':
-            component_costs_centralized = {'Stack':200.1*CEPCI_ratio,'Power Electronics':94.8*CEPCI_ratio,'BOP':111.6*CEPCI_ratio,'H2 Conditioning':31.0*CEPCI_ratio}
+            component_costs_centralized = {'Stack':331.7,'Power Electronics':131.4,'BOP':154.8,'H2 Conditioning':42.8}
             component_scales_centralized = {'Stack':2000,'Power Electronics':18000,'BOP':18000,'H2 Conditioning':18000}
             component_scales_distributed = {'Stack':2000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
         elif electrolyzer_cost_case == 'Mid' or electrolyzer_cost_case == 'mid':
-            component_costs_centralized = {'Stack':276.9*CEPCI_ratio,'Power Electronics':113.0*CEPCI_ratio,'BOP':135.0*CEPCI_ratio,'H2 Conditioning':41.0*CEPCI_ratio}
+            component_costs_centralized = {'Stack':415.0,'Power Electronics':156.2,'BOP':186.7,'H2 Conditioning':56.5}
             component_scales_centralized = {'Stack':2000,'Power Electronics':9000,'BOP':9000,'H2 Conditioning':9000}
             component_scales_distributed = {'Stack':2000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
         elif electrolyzer_cost_case == 'High' or electrolyzer_cost_case == 'high':
-            component_costs_centralized = {'Stack':352.5*CEPCI_ratio,'Power Electronics':167.0*CEPCI_ratio,'BOP':205.8*CEPCI_ratio,'H2 Conditioning':75.5*CEPCI_ratio}
-            component_scales_centralized = {'Stack':1000,'Power Electronics':2000,'BOP':2000,'H2 Conditioning':2000}
+            component_costs_centralized = {'Stack':447.9,'Power Electronics':180.9,'BOP':218.8,'H2 Conditioning':71.4}
+            component_scales_centralized = {'Stack':1000,'Power Electronics':5000,'BOP':5000,'H2 Conditioning':5000}
             component_scales_distributed = {'Stack':1000,'Power Electronics':2000,'BOP':2000,'H2 Conditioning':2000}
 
         # Stack durability for 2025
@@ -210,17 +210,17 @@ def set_electrolyzer_info(hopp_dict, atb_year, electrolysis_scale,electrolyzer_c
 
         # Centralized costs and scales for 2025
         if electrolyzer_cost_case == 'Low' or electrolyzer_cost_case == 'low':
-            component_costs_centralized = {'Stack':47.9*CEPCI_ratio,'Power Electronics':49.5*CEPCI_ratio,'BOP':55.1*CEPCI_ratio,'H2 Conditioning':17.5*CEPCI_ratio}
+            component_costs_centralized = {'Stack':67.3,'Power Electronics':69.0,'BOP':76.9,'H2 Conditioning':24.2}
             component_scales_centralized = {'Stack':10000,'Power Electronics':40000,'BOP':40000,'H2 Conditioning':40000}
             component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
         elif electrolyzer_cost_case == 'Mid' or electrolyzer_cost_case == 'mid':
-            component_costs_centralized = {'Stack':178.3*CEPCI_ratio,'Power Electronics':65.7*CEPCI_ratio,'BOP':75.0*CEPCI_ratio,'H2 Conditioning':20.5*CEPCI_ratio}
-            component_scales_centralized = {'Stack':2000,'Power Electronics':40000,'BOP':40000,'H2 Conditioning':40000}
-            component_scales_distributed = {'Stack':2000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
-        elif electrolyzer_cost_case == 'High' or electrolyzer_cost_case == 'high':
-            component_costs_centralized = {'Stack':249.2*CEPCI_ratio,'Power Electronics':90.9*CEPCI_ratio,'BOP':106.7*CEPCI_ratio,'H2 Conditioning':29.5*CEPCI_ratio}
+            component_costs_centralized = {'Stack':219.3,'Power Electronics':98.5,'BOP':113.2,'H2 Conditioning':35.4}
             component_scales_centralized = {'Stack':2000,'Power Electronics':20000,'BOP':20000,'H2 Conditioning':20000}
-            component_scales_distributed = {'Stack':2000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
+            component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
+        elif electrolyzer_cost_case == 'High' or electrolyzer_cost_case == 'high':
+            component_costs_centralized = {'Stack':340.1,'Power Electronics':124.4,'BOP':146.0,'H2 Conditioning':40.4}
+            component_scales_centralized = {'Stack':2000,'Power Electronics':20000,'BOP':20000,'H2 Conditioning':20000}
+            component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
 
         # Stack durability for 2030
         if electrolyzer_replacement_scenario == 'Standard':
@@ -234,15 +234,15 @@ def set_electrolyzer_info(hopp_dict, atb_year, electrolysis_scale,electrolyzer_c
 
         # Centralized costs and scales for 2025
         if electrolyzer_cost_case == 'Low' or electrolyzer_cost_case == 'low':
-            component_costs_centralized = {'Stack':40.1*CEPCI_ratio,'Power Electronics':44.5*CEPCI_ratio,'BOP':49.0*CEPCI_ratio,'H2 Conditioning':16.4*CEPCI_ratio}
+            component_costs_centralized = {'Stack':52.4,'Power Electronics':59.3,'BOP':65.2,'H2 Conditioning':22.2}
             component_scales_centralized = {'Stack':10000,'Power Electronics':40000,'BOP':40000,'H2 Conditioning':40000}
             component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
         elif electrolyzer_cost_case == 'Mid' or electrolyzer_cost_case == 'mid':
-            component_costs_centralized = {'Stack':132.9*CEPCI_ratio,'Power Electronics':59.8*CEPCI_ratio,'BOP':67.7*CEPCI_ratio,'H2 Conditioning':19.5*CEPCI_ratio}
-            component_scales_centralized = {'Stack':10000,'Power Electronics':40000,'BOP':40000,'H2 Conditioning':40000}
+            component_costs_centralized = {'Stack':185.5,'Power Electronics':78.1,'BOP':88.1,'H2 Conditioning':25.9}
+            component_scales_centralized = {'Stack':5000,'Power Electronics':40000,'BOP':40000,'H2 Conditioning':40000}
             component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
         elif electrolyzer_cost_case == 'High' or electrolyzer_cost_case == 'high':
-            component_costs_centralized = {'Stack':200.5*CEPCI_ratio,'Power Electronics':87.9*CEPCI_ratio,'BOP':102.8*CEPCI_ratio,'H2 Conditioning':28.9*CEPCI_ratio}
+            component_costs_centralized = {'Stack':273.7,'Power Electronics':120.3,'BOP':140.7,'H2 Conditioning':39.6}
             component_scales_centralized = {'Stack':5000,'Power Electronics':20000,'BOP':20000,'H2 Conditioning':20000}
             component_scales_distributed = {'Stack':turbine_rating*1000,'Power Electronics':turbine_rating*1000,'BOP':turbine_rating*1000,'H2 Conditioning':turbine_rating*1000}
 
