@@ -90,10 +90,10 @@ if __name__ == '__main__':
 
     site_selection = [
                     #'Site 1',
-                    'Site 2',
+                    #'Site 2',
                     #'Site 3',
                     #'Site 4',
-                    #'Site 5'
+                    'Site 5'
                     ]
 
     electrolysis_cases = [
@@ -138,9 +138,12 @@ if __name__ == '__main__':
                                     grid_price_filename = 'annual_average_retail_prices_adder.csv' # Removing grid cost from high sensitivity case
                                 
                                 if electrolyzer_cost_case != 'Mid':
-                                    fin_sum_dir = os.path.join(project_path, "Results_sensitivity", "Fin_sum")
-                                    energy_profile_dir = os.path.join(project_path, "Results_sensitivity", "Profiles")
-                                    price_breakdown_dir = os.path.join(project_path, "Results_sensitivity", "ProFAST")
+                                    #fin_sum_dir = os.path.join(project_path, "Results_sensitivity", "Fin_sum")
+                                    #energy_profile_dir = os.path.join(project_path, "Results_sensitivity", "Profiles")
+                                    #price_breakdown_dir = os.path.join(project_path, "Results_sensitivity", "ProFAST")
+                                    fin_sum_dir = os.path.join(project_path, results_dir_name, "Fin_sum")
+                                    energy_profile_dir = os.path.join(project_path, results_dir_name, "Profiles")
+                                    price_breakdown_dir = os.path.join(project_path, results_dir_name, "ProFAST")
                                 else:
                                     fin_sum_dir = os.path.join(project_path, results_dir_name, "Fin_sum")
                                     energy_profile_dir = os.path.join(project_path, results_dir_name, "Profiles")

@@ -62,13 +62,13 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
      parent_path,results_dir,\
      grid_connected_hopp,grid_connection_scenario, grid_price_scenario,\
      site_df,sample_site,site,site_location,\
-     turbine_model,wind_size_mw,nTurbs,floris_config,floris,\
+     turbine_model,wind_sizes_mw_max,nTurbs,floris_config,floris,\
      sell_price,buy_price,discount_rate,debt_equity_split,\
      electrolyzer_size_mw,electrolyzer_capacity_EOL_MW,n_pem_clusters,pem_control_type,hydrogen_demand_kgphr,
      electrolyzer_capex_kw,electrolyzer_component_costs_kw,wind_plant_degradation_power_decrease,electrolyzer_energy_kWh_per_kg, time_between_replacement,
      user_defined_stack_replacement_time,use_optimistic_pem_efficiency,electrolyzer_degradation_penalty,storage_capacity_multiplier,hydrogen_production_capacity_required_kgphr,\
      electrolyzer_model_parameters,electricity_production_target_MWhpyr,turbine_rating,electrolyzer_degradation_power_increase,cluster_cap_mw,interconnection_size_mw,solar_ITC,grid_price_filename,
-     gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,hydrogen_production_target_kgpy,print_toggle] = arg_list
+     gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,hydrogen_production_target_kgpy,print_toggle,excess_capacity_fractions] = arg_list
 
     electrolyzer_installation_factor = 12/100
     electrolyzer_direct_cost_kw = electrolyzer_capex_kw*(1+electrolyzer_installation_factor)
@@ -206,47 +206,66 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
     if print_toggle:
         print('Running solar and battery parameter sweep with {} solar sizes and {} battery sizes...'.format(len(solar_sizes_mw_AC),len(battery_sizes_mw)))
     #start=time.perf_counter()
-    for si,solar_size_mw_AC in enumerate(solar_sizes_mw_AC):
-        solar_desc='{}MW_Solar'.format(solar_size_mw_AC)
-        #print(solar_desc)
-        renewable_plant_cost['wind']={'o&m_per_kw':wind_om_cost_kw,'capex_per_kw':wind_cost_kw,'size_mw':wind_size_mw}
 
-        if solar_size_mw_AC>0:
-            solar_cost_kw_AC = copy.copy(solar_main_cost_kw)
-            solar_om_cost_kw_AC = copy.copy(solar_main_om_cost_kw)
-        else:
-            solar_om_cost_kw_AC=0
-            solar_cost_kw_AC=0
+    for wi,wind_size_mw_max in enumerate(wind_sizes_mw_max):
+        
+        wind_size_mw = wind_size_mw_max
+        solar_sizes_mw_AC = solar_test_sizes_mw_AC['Wind Size (MW) = ' + str(wind_size_mw)]
 
-        solar_DC_AC_ratio = 1.3
-        solar_size_mw_DC = solar_size_mw_AC*solar_DC_AC_ratio
-        solar_cost_kw_DC = solar_cost_kw_AC/solar_DC_AC_ratio
-        solar_om_cost_kw_DC = solar_om_cost_kw_AC/solar_DC_AC_ratio
+        for si,solar_size_mw_AC in enumerate(solar_sizes_mw_AC):
+            solar_desc='{}MW_Solar'.format(solar_size_mw_AC)
+            #print(solar_desc)
+            renewable_plant_cost['wind']={'o&m_per_kw':wind_om_cost_kw,'capex_per_kw':wind_cost_kw,'size_mw':wind_size_mw}
 
-        hopp_dict.main_dict['Configuration']['solar_size']=solar_size_mw_AC
-        hopp_dict.main_dict['Configuration']['solar_cost_kw']=solar_cost_kw_AC
-        hopp_dict.main_dict['Configuration']['solar_om_cost_kw']=solar_om_cost_kw_AC
-        renewable_plant_cost['pv']={'o&m_per_kw':solar_om_cost_kw_AC,
-        'capex_per_kw':solar_cost_kw_AC,
-        'size_mw':solar_size_mw_AC}
+            if solar_size_mw_AC>0:
+                solar_cost_kw_AC = copy.copy(solar_main_cost_kw)
+                solar_om_cost_kw_AC = copy.copy(solar_main_om_cost_kw)
+            else:
+                solar_om_cost_kw_AC=0
+                solar_cost_kw_AC=0
 
-        for bi,storage_size_mw in enumerate(storage_sizes_mw):
+            solar_DC_AC_ratio = 1.3
+            solar_size_mw_DC = solar_size_mw_AC*solar_DC_AC_ratio
+            solar_cost_kw_DC = solar_cost_kw_AC/solar_DC_AC_ratio
+            solar_om_cost_kw_DC = solar_om_cost_kw_AC/solar_DC_AC_ratio
+
+            hopp_dict.main_dict['Configuration']['solar_size']=solar_size_mw_AC
+            hopp_dict.main_dict['Configuration']['solar_cost_kw']=solar_cost_kw_AC
+            hopp_dict.main_dict['Configuration']['solar_om_cost_kw']=solar_om_cost_kw_AC
+            renewable_plant_cost['pv']={'o&m_per_kw':solar_om_cost_kw_AC,
+            'capex_per_kw':solar_cost_kw_AC,
+            'size_mw':solar_size_mw_AC}
+
+            if grid_connection_scenario == 'off-grid':
+                storage_size_mw = 0.15*electrolyzer_size_mw
+                storage_hours = 1
+                storage_size_mwh = storage_size_mw*storage_hours
+            else:
+                storage_size_mw = 0
+                storage_hours = 0
+                storage_size_mwh = 0
+
+        #for bi,storage_size_mw in enumerate(storage_sizes_mw):
         #     if si==0 and bi==0:
         #         run_wind_plant=True
         #     else:
         #         run_wind_plant=False
-            run_wind_plant = True
+            
+            if wind_size_mw > 0:
+                run_wind_plant = True
+            else:
+                run_wind_plant = False
 
             if storage_size_mw>0:
                 #battery_desc='{}MW_{}Hr_Battery'
-                storage_size_mwh = storage_sizes_mwh[bi]
-                storage_hours = storage_size_mwh/storage_size_mw
+                #storage_size_mwh = storage_sizes_mwh[bi]
+                #storage_hours = storage_size_mwh/storage_size_mw
                 battery_desc='{}MW_{}Hr_Battery'.format(storage_size_mw,round(storage_hours))
                 storage_cost_kw=copy.copy(storage_cost_main_kw)
                 storage_cost_kwh=copy.copy(storage_cost_main_kwh)
             else:
                 battery_desc='NoBattery'
-                storage_size_mwh =0
+                #storage_size_mwh =0
                 storage_cost_kw=0
                 storage_cost_kwh=0
                 storage_hours= 0
@@ -271,6 +290,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             'size_mwh':storage_size_mwh,
             'storage_hours':storage_hours}
 
+
+
+            []
             # Estimate revised sizing of things
             # Run HOPP
             hopp_dict_cfest, plant_power_production_cfest, plant_shortfall_hopp_cfest, plant_curtailment_hopp_cfest, hybrid_plant_cfest, wind_size_mw_cfest, solar_size_mw_DC_cfest, lcoe_cfest = \
@@ -324,30 +346,41 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             if grid_connection_scenario == 'off-grid':
                 if solar_size_mw_AC == solar_sizes_mw_AC[-1] or wind_size_mw ==0:
                     wind_size_mw = 0
+                    wind_size_mw_noexcess = 0
                     wind_cf_est = 0
                     run_wind_plant = False
-                else:
+                else:  
                     wind_cf_est = hybrid_plant_cfest.wind.capacity_factor/100
-                    wind_size_mw_calc = (electricity_production_target_MWhpyr/8760-solar_size_mw_AC*solar_cf_AC_est)/wind_cf_est
-                    n_turbines = int(np.ceil(np.ceil(wind_size_mw_calc)/turbine_rating))
+                    # Calculate excess wind size based on solar size
+                    electricity_production_total_MWhpyr_excess = wind_size_mw_max*8760*wind_cf_est
+                    wind_size_mw_calc_excess = (electricity_production_total_MWhpyr_excess/8760-solar_size_mw_AC*solar_cf_AC_est)/wind_cf_est
+                    n_turbines = int(np.ceil(np.ceil(wind_size_mw_calc_excess)/turbine_rating))
                     wind_size_mw = turbine_rating*n_turbines
 
+                    # Calculate wind size if no excess
+                    wind_size_mw_calc_noexcess = (electricity_production_target_MWhpyr/8760 - solar_size_mw_AC*solar_cf_AC_est)/wind_cf_est
+                    n_turbines_noexcess = int(np.ceil(np.ceil(wind_size_mw_calc_noexcess)/turbine_rating))
+                    wind_size_mw_noexcess = turbine_rating*n_turbines_noexcess
                 
-
+                excess_capacity_percent = excess_capacity_fractions[wi]*100
+                
                 combined_vre_power_mWh = solar_power_norm_AC*solar_size_mw_AC +wind_power_norm*wind_size_mw
+
+                combined_vre_power_mWh_noexcess = solar_power_norm_AC*solar_size_mw_AC + wind_power_norm*wind_size_mw_noexcess
 
                 #electrolyzer_capacity_EOL_MW = max(max(combined_vre_power_mWh),wind_size_mw_calc/(1+electrolyzer_degradation_power_increase))
                 #electrolyzer_capacity_EOL_MW = max(max(combined_vre_power_mWh),wind_size_mw,solar_size_mw)
-                electrolyzer_capacity_EOL_MW = max(combined_vre_power_mWh)
+                electrolyzer_capacity_EOL_MW = max(combined_vre_power_mWh_noexcess)
                 electrolyzer_capacity_BOL_MW = electrolyzer_capacity_EOL_MW/(1+electrolyzer_degradation_power_increase)
                 n_pem_clusters_max = int(np.ceil(np.ceil(electrolyzer_capacity_BOL_MW)/cluster_cap_mw))
                 electrolyzer_size_mw = n_pem_clusters_max*cluster_cap_mw
                 if print_toggle:
+                    print('Excess VRE capacity: ' + str(excess_capacity_percent) + ' (%)')
                     print('Solar size: ' +str(solar_size_mw_AC) + ' MW')
                     print('Wind size: ' +str(wind_size_mw) + ' MW')
                     print('Electrolyzer size: ' +str(electrolyzer_size_mw)+ ' MW')
-                    print('Estimated annual electricity production (MWh): '+ str(sum(combined_vre_power_mWh)))
-                    print('Battery size: ' + str(storage_size_mw) + ' MW, ' + str(storage_size_mwh) + ' MWh')
+                    #print('Estimated annual electricity production (MWh): '+ str(sum(combined_vre_power_mWh)))
+                    #print('Battery size: ' + str(storage_size_mw) + ' MW, ' + str(storage_size_mwh) + ' MWh')
 
                 kw_continuous = electrolyzer_size_mw * 1000
                 load = [kw_continuous for x in
@@ -357,17 +390,23 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 else:
                     battery_dispatch_load = list(np.array(load))
 
+                
+
             elif grid_connection_scenario =='hybrid-grid':
                 if solar_size_mw_AC == solar_sizes_mw_AC[-1] or wind_size_mw ==0:
                     wind_size_mw = 0
                     wind_cf_est = 0
                     run_wind_plant = False
                 else:
-                    wind_size_mw_calc = (electrolyzer_capacity_EOL_MW - solar_size_mw_AC*max(solar_power_norm_AC))/max(wind_power_norm)
+                    wind_cf_est = hybrid_plant_cfest.wind.capacity_factor/100
+                    wind_size_mw_calc = (wind_size_mw_max - solar_size_mw_AC)#*max(solar_power_norm_AC))/max(wind_power_norm)
                     n_turbines = int(np.ceil(np.ceil(wind_size_mw_calc)/turbine_rating))
                     wind_size_mw = turbine_rating*n_turbines
                 
+                excess_capacity_percent = 0
                 []
+
+                
 
             # Run HOPP
             hopp_dict, plant_power_production, plant_shortfall_hopp, plant_curtailment_hopp, hybrid_plant, wind_size_mw, solar_size_mw_DC, lcoe = \
@@ -399,8 +438,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             
             solar_size_mw_AC = solar_size_mw_DC/solar_DC_AC_ratio
 
-            if print_toggle:
-                print('Actual wind/solar electricity output (MWh): ' + str(sum(plant_power_production)/1000))
+            #if print_toggle:
+                #print('Actual wind/solar electricity output (MWh): ' + str(sum(plant_power_production)/1000))
             if run_wind_plant:
                 cf_wind_annuals = hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
                 wind_itc_total = hybrid_plant.wind._financial_model.Outputs.itc_total
@@ -420,6 +459,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     renewable_plant_cost['wind']['size_mw']=wind_size_mw
                 combined_pv_wind_power_production_hopp = plant_power_production
             else:
+                cf_wind_annuals = 0
+                wind_itc_total = 0
                 # solar_storage_only_lcoe=copy.copy(lcoe)
                 if solar_size_mw_AC>0:
                     pv_plant_power = hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]
@@ -427,7 +468,10 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     cf_solar_annuals=hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
 
                 else:
-                    combined_pv_wind_power_production_hopp= np.array(wind_plant_power) #plant_power_production+
+                    if wind_size_mw > 0:
+                        combined_pv_wind_power_production_hopp= np.array(wind_plant_power) #plant_power_production+
+                    else:
+                        combined_pv_wind_power_production_hopp = np.zeros(8760)
                     cf_solar_annuals = np.zeros(30)
 
             energy_shortfall_hopp = [x - y for x, y in
@@ -460,9 +504,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 plot_grid,
             )
 
-            if print_toggle:
-                print('Energy to electrolyzer after battery (MWh): ' + str(sum(energy_to_electrolyzer)/1000))
-                print('Curtailed electricity after storage (%): ' + str((sum(combined_pv_wind_power_production_hopp) - sum(energy_to_electrolyzer))/sum(combined_pv_wind_power_production_hopp)*100))
+            #if print_toggle:
+                #print('Energy to electrolyzer after battery (MWh): ' + str(sum(energy_to_electrolyzer)/1000))
+                #print('Curtailed electricity after storage (%): ' + str((sum(combined_pv_wind_power_production_hopp) - sum(energy_to_electrolyzer))/sum(combined_pv_wind_power_production_hopp)*100))
             #print('Electricity production margin (%): ' + str(100*(sum(energy_to_electrolyzer)/1000 - electricity_production_target_MWhpyr)/electricity_production_target_MWhpyr))
 
             if solar_size_mw_AC > 0:
@@ -514,7 +558,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 cabling_vs_pipeline_cost_difference = 0
                 cabling_material_cost =0
                 pipeline_material_cost=0
-                if grid_connection_scenario == 'hybrid-grid' or grid_connection_scenario == 'grid-only':
+                if grid_connection_scenario == 'hybrid-grid':
 
                     # Upload the right transmission cost CSV. Note, only works up to 1049 MW (files only go up to 1000 MW)
                     plant_step_size = 100
@@ -526,9 +570,15 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     transmission_cost_lat_lons = [(x,y) for x,y in zip(transmission_cost_df['latitude'],transmission_cost_df['longitude'])]
                     transmission_cost_lat,transmission_cost_lon = transmission_cost_lat_lons[cdist([lat_lon],transmission_cost_lat_lons).argmin()]
 
-                    trans_cap_cost_per_mw = transmission_cost_df.loc[(transmission_cost_df['latitude']==transmission_cost_lat) & (transmission_cost_df['longitude']==transmission_cost_lon),'trans_cap_cost_per_mw'].tolist()[0]
-                    reinforcement_cost_per_mw = transmission_cost_df.loc[(transmission_cost_df['latitude']==transmission_cost_lat) & (transmission_cost_df['longitude']==transmission_cost_lon),'reinforcement_cost_per_mw'].tolist()[0]
+                    model_year_CEPCI = 816
+                    equation_year_CEPCI = 541.7
+
+                    trans_cap_cost_per_mw = model_year_CEPCI/equation_year_CEPCI*transmission_cost_df.loc[(transmission_cost_df['latitude']==transmission_cost_lat) & (transmission_cost_df['longitude']==transmission_cost_lon),'trans_cap_cost_per_mw'].tolist()[0]
+                    reinforcement_cost_per_mw = 100000#model_year_CEPCI/equation_year_CEPCI*transmission_cost_df.loc[(transmission_cost_df['latitude']==transmission_cost_lat) & (transmission_cost_df['longitude']==transmission_cost_lon),'reinforcement_cost_per_mw'].tolist()[0]
                     transmission_cost = (trans_cap_cost_per_mw + reinforcement_cost_per_mw)*interconnection_size_mw
+                elif grid_connection_scenario == 'grid-only':
+                    reinforcement_cost_per_mw = 100000
+                    transmission_cost = reinforcement_cost_per_mw*interconnection_size_mw
 
                 else:
                     transmission_cost = 0
@@ -536,8 +586,10 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 turbine_power_electronics_savings = 0
 
             #revised_wind_renewable_cost = hybrid_plant.grid.total_installed_cost - cabling_vs_pipeline_cost_difference - turbine_power_electronics_savings*wind_size_mw*1000 + transmission_cost
+            #renewable_plant_cost['wind_savings_dollars']={'turbine_power_electronics_savings_dollars':-1*turbine_power_electronics_savings*wind_size_mw*1000,
+            #'tranmission_cost_dollars':transmission_cost,'cabling_vs_pipeline_cost_difference_dollars':-1*cabling_vs_pipeline_cost_difference}
             renewable_plant_cost['wind_savings_dollars']={'turbine_power_electronics_savings_dollars':-1*turbine_power_electronics_savings*wind_size_mw*1000,
-            'tranmission_cost_dollars':transmission_cost,'cabling_vs_pipeline_cost_difference_dollars':-1*cabling_vs_pipeline_cost_difference}
+            'cabling_vs_pipeline_cost_difference_dollars':-1*cabling_vs_pipeline_cost_difference} # Can possibly get rid of this altogether
 
             hopp_dict, H2_Results, electrical_generation_timeseries = hopp_tools_steel.run_H2_PEM_sim(
                 hopp_dict,
@@ -566,9 +618,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
 
             hydrogen_annual_production = H2_Results['hydrogen_annual_output']
 
-            if print_toggle:
-                print('Actual hydrogen annual production (kgpyr): ' + str(hydrogen_annual_production))
-                print('Annual H2 production margin (%): ' + str(100*(hydrogen_annual_production - hydrogen_production_target_kgpy)/hydrogen_production_target_kgpy))
+            #if print_toggle:
+                #print('Actual hydrogen annual production (kgpyr): ' + str(hydrogen_annual_production))
+                #print('Annual H2 production margin (%): ' + str(100*(hydrogen_annual_production - hydrogen_production_target_kgpy)/hydrogen_production_target_kgpy))
 
                 # hydrogen_max_hourly_production_kg = max(H2_Results['hydrogen_hourly_production'])
 
@@ -599,7 +651,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             if grid_connection_scenario == 'off-grid':
                 combined_VRE_capacity_required_MW = electrolyzer_capacity_EOL_MW + storage_compressor_total_capacity_kW/1000
 
-                combined_VRE_capacity_deficit = combined_VRE_capacity_required_MW - max(combined_vre_power_mWh)
+                combined_VRE_capacity_deficit = max(0,(combined_VRE_capacity_required_MW - max(combined_vre_power_mWh)))
 
                 if combined_VRE_capacity_deficit > 0:
                     if solar_size_mw_AC == solar_sizes_mw_AC[-1] or wind_size_mw ==0:
@@ -619,27 +671,30 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
 
             # Apply storage multiplier
             hydrogen_storage_capacity_kg = hydrogen_storage_capacity_kg*storage_capacity_multiplier
-            if print_toggle:
-                print(storage_status_message)
+            #if print_toggle:
+             #   print(storage_status_message)
 
             # Run ProFAST to get LCOH
 
+            cpi_equationyear = 271
+            cpi_modelyear = 292.7
+            cpi_ratio = cpi_modelyear/cpi_equationyear
             # Municipal water rates and wastewater treatment rates combined ($/gal)
             if site_location == 'Site 1': # Site 1 - Indiana
                 #water_cost = 0.00612
-                water_cost = 0.0045
+                water_cost = cpi_ratio*0.0045
             elif site_location == 'Site 2': # Site 2 - Texas
                 #water_cost = 0.00811
-                water_cost = 0.00478
+                water_cost = cpi_ratio*0.00478
             elif site_location == 'Site 3': # Site 3 - Iowa
                 #water_cost = 0.00634
-                water_cost = 0.00291
+                water_cost = cpi_ratio*0.00291
             elif site_location == 'Site 4': # Site 4 - Mississippi
                 #water_cost = 0.00844
-                water_cost = 0.00409
+                water_cost = cpi_ratio*0.00409
             elif site_location =='Site 5': # Site 5 - MN, assuming same as IA for now
                 #water_cost=0.00634 
-                water_cost = 0.00291
+                water_cost = cpi_ratio*0.00291
 
 
             electrolyzer_efficiency_while_running = []
@@ -668,6 +723,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             grid_prices_interpolated_USDperkwh = grid_price_interpolation(grid_prices,site_name,atb_year,useful_life,'kWh')
 
 
+
             # h2_solution,h2_summary,h2_price_breakdown,lcoh_breakdown,electrolyzer_installed_cost_kw,elec_cf,ren_frac,electrolyzer_total_EI_policy_grid,electrolysis_total_EI_policy_offgrid,H2_PTC,Ren_PTC,h2_production_capex = run_profast_for_hydrogen. run_profast_for_hydrogen(hopp_dict,electrolyzer_size_mw,H2_Results,\
             #                                 electrolyzer_capex_kw,time_between_replacement,electrolyzer_energy_kWh_per_kg,hydrogen_storage_capacity_kg,hydrogen_storage_cost_USDprkg,\
             #                                 desal_capex,desal_opex,useful_life,water_cost,wind_size_mw,solar_size_mw,storage_size_mw,renewable_plant_cost,wind_om_cost_kw,grid_connected_hopp,\
@@ -679,7 +735,10 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                                     electrolyzer_capex_kw,time_between_replacement,electrolyzer_energy_kWh_per_kg,hydrogen_storage_capacity_kg,hydrogen_storage_cost_USDprkg,storage_compressor_total_capacity_kW,storage_compressor_total_installed_cost_USD,hydrogen_storage_duration_hr,\
                                     desal_capex,desal_opex,useful_life,water_cost,wind_size_mw,solar_size_mw_AC,storage_size_mw,renewable_plant_cost,wind_om_cost_kw,grid_connected_hopp,\
                                     grid_connection_scenario,atb_year, site_name, policy_option, policy,electrical_generation_timeseries, combined_pv_wind_storage_power_production_hopp,combined_pv_wind_curtailment_hopp,\
-                                    energy_shortfall_hopp,elec_price,grid_prices_interpolated_USDperkwh, grid_price_scenario,user_defined_stack_replacement_time,use_optimistic_pem_efficiency,wind_annual_energy_MWh,solar_annual_energy_MWh,solar_ITC,gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,print_toggle)
+                                    energy_shortfall_hopp,elec_price,grid_prices_interpolated_USDperkwh, grid_price_scenario,user_defined_stack_replacement_time,use_optimistic_pem_efficiency,wind_annual_energy_MWh,solar_annual_energy_MWh,\
+                                        solar_ITC,gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,print_toggle,transmission_cost)
+
+            #inputs_to_profast_df.to_dsv('inputs_to_profast_sweep_{}_{}_{}.csv'.format(site_name,atb_year))
 
 
             lcoh_init = h2_solution['price']
@@ -707,6 +766,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 lcoh_2return=lcoh_final
                 best_case_desc=solar_desc + '-' + battery_desc
                 best_hopp_dict=copy.copy(hopp_dict)
+                #best_H2_Results = H2_Results
+                best_electrical_generation_timeseries = electrical_generation_timeseries
                 best_result_ts_data=pd.DataFrame({
                 'H2 Production [kg]': H2_Results['hydrogen_hourly_production'][0:len(energy_to_electrolyzer)],
                 'Energy to Electrolyzer [kWh]':energy_to_electrolyzer,
@@ -755,6 +816,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 cost_to_buy_from_grid_best = cost_to_buy_from_grid
                 profit_from_selling_to_grid_best = profit_from_selling_to_grid
                 cf_solar_annuals_best = cf_solar_annuals
+                excess_capacity_percent_best = excess_capacity_percent
 
 
             min_lcoh=np.min([min_lcoh,lcoh_init])
@@ -767,7 +829,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
     'ProFAST LCOH Breakdown':lcoh_info_profast,
     'H2 Results':h2_performance,
     'H2 Aggregate Data':h2_agg,
-    'H2 Time Series Info':h2_ts}
+    'H2 Time Series Info':h2_ts,
+    'Elec Time Series Info':best_electrical_generation_timeseries}
     param_folder_name=results_dir + '/PV_PS/'
     if not os.path.exists(param_folder_name):
         os.mkdir(param_folder_name)
@@ -786,10 +849,10 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
         # import pickle
         # with open(results_dir + filename,'wb') as handle:
         #     pickle.dump(best_result_data,handle,protocol=pickle.HIGHEST_PROTOCOL)
-        if print_toggle:
-            print('Saved best case solar & battery scenario information to...' )
-            print('Folder: '+ param_folder_name)
-            print('Filename: ' + filename)
+        #if print_toggle:
+            #print('Saved best case solar & battery scenario information to...' )
+            #print('Folder: '+ param_folder_name)
+            #print('Filename: ' + filename)
     
 
     if save_param_sweep_summary:
@@ -808,4 +871,4 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             combined_pv_wind_power_production_hopp_best,combined_pv_wind_storage_power_production_hopp_best,\
             combined_pv_wind_curtailment_hopp_best,energy_shortfall_hopp_best,energy_to_electrolyzer_best,\
             hybrid_plant_best,solar_size_mw_best,wind_size_mw_best,storage_size_mw_best,storage_size_mwh_best,electrolyzer_size_mw_best,renewable_plant_cost_best,lcoe_best,\
-            cost_to_buy_from_grid_best,profit_from_selling_to_grid_best,cf_wind_annuals,cf_solar_annuals_best,wind_itc_total
+            cost_to_buy_from_grid_best,profit_from_selling_to_grid_best,cf_wind_annuals,cf_solar_annuals_best,wind_itc_total,excess_capacity_percent_best
