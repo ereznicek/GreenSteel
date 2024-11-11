@@ -214,6 +214,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
 
         for si,solar_size_mw_AC in enumerate(solar_sizes_mw_AC):
             solar_desc='{}MW_Solar'.format(solar_size_mw_AC)
+            wind_size_mw = wind_size_mw_max
             #print(solar_desc)
             renewable_plant_cost['wind']={'o&m_per_kw':wind_om_cost_kw,'capex_per_kw':wind_cost_kw,'size_mw':wind_size_mw}
 
@@ -290,11 +291,12 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             'size_mwh':storage_size_mwh,
             'storage_hours':storage_hours}
 
-
+            
 
             []
             # Estimate revised sizing of things
             # Run HOPP
+            wind_size_mw_cfest = 1000
             hopp_dict_cfest, plant_power_production_cfest, plant_shortfall_hopp_cfest, plant_curtailment_hopp_cfest, hybrid_plant_cfest, wind_size_mw_cfest, solar_size_mw_DC_cfest, lcoe_cfest = \
                 hopp_tools_steel.run_HOPP(
                             project_path,
@@ -304,7 +306,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                             sample_site,
                             forced_sizes,
                             solar_size_mw_DC,
-                            wind_size_mw,
+                            wind_size_mw_cfest,
                             storage_size_mw,
                             storage_size_mwh,
                             wind_cost_kw,
@@ -335,7 +337,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             # else:
             #     wind_cf_est = 0
             if wind_size_mw > 0:
-                wind_power_norm = np.array(hybrid_plant_cfest.wind.generation_profile[:8760])/(wind_size_mw*1000)
+                wind_power_norm = np.array(hybrid_plant_cfest.wind.generation_profile[:8760])/(wind_size_mw_cfest*1000)
             else:
                 wind_power_norm = np.zeros(8760)
             if solar_size_mw_AC > 0:
@@ -382,6 +384,23 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     #print('Estimated annual electricity production (MWh): '+ str(sum(combined_vre_power_mWh)))
                     #print('Battery size: ' + str(storage_size_mw) + ' MW, ' + str(storage_size_mwh) + ' MWh')
 
+                n_turbines = wind_size_mw/(turbine_rating)
+
+                if n_turbines < 300:
+                    n_farms = 1
+                else:
+                    #n_farms = 1.1
+                    n_farms = np.round(n_turbines/300,decimals = 3)
+                    wind_size_mw_max = np.round(wind_size_mw_max/n_farms,decimals = 3)
+                    wind_size_mw = np.round(wind_size_mw/n_farms,decimals = 3)
+                    solar_size_mw_AC = np.round(solar_size_mw_AC/n_farms,decimals = 3)
+                    solar_size_mw_DC = np.round(solar_size_mw_DC/n_farms,decimals = 3)
+                    electrolyzer_size_mw = np.round(electrolyzer_size_mw/n_farms,decimals = 3)
+                    storage_size_mw = np.round(storage_size_mw/n_farms,decimals = 3)
+                    storage_size_mwh = np.round(storage_size_mwh/n_farms,decimals = 3)
+                    electricity_production_target_MWhpyr = np.round(electricity_production_target_MWhpyr/n_farms,decimals = 3)
+                    #+hydrogen_demand_kgphr = hydrogen_demand_kgphr/n_farms
+                
                 kw_continuous = electrolyzer_size_mw * 1000
                 load = [kw_continuous for x in
                         range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
@@ -389,8 +408,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     battery_dispatch_load = list(0.15*np.array(load))
                 else:
                     battery_dispatch_load = list(np.array(load))
-
-                
+              
 
             elif grid_connection_scenario =='hybrid-grid':
                 if solar_size_mw_AC == solar_sizes_mw_AC[-1] or wind_size_mw ==0:
@@ -406,7 +424,12 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 excess_capacity_percent = 0
                 []
 
-                
+                n_farms = 1
+
+                if print_toggle:
+                    print('Solar size: ' +str(solar_size_mw_AC) + ' MW')
+                    print('Wind size: ' +str(wind_size_mw) + ' MW')
+                    print('Electrolyzer size: ' +str(electrolyzer_size_mw)+ ' MW')              
 
             # Run HOPP
             hopp_dict, plant_power_production, plant_shortfall_hopp, plant_curtailment_hopp, hybrid_plant, wind_size_mw, solar_size_mw_DC, lcoe = \
@@ -436,6 +459,28 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                             run_wind_plant
                         )
             
+            if grid_connection_scenario == 'off-grid':
+                wind_size_mw_max = int(np.round(wind_size_mw_max*n_farms))
+                wind_size_mw = int(np.round(wind_size_mw*n_farms))
+                solar_size_mw_AC = np.round(solar_size_mw_AC*n_farms)
+                solar_size_mw_DC = np.round(solar_size_mw_DC*n_farms)
+                electrolyzer_size_mw = np.round(electrolyzer_size_mw*n_farms)
+                storage_size_mw = np.round(storage_size_mw*n_farms)
+                storage_size_mwh = np.round(storage_size_mwh*n_farms)
+                electricity_production_target_MWhpyr = np.round(electricity_production_target_MWhpyr*n_farms)
+                plant_power_production = [np.round(x*n_farms) for x in plant_power_production]
+                plant_shortfall_hopp = [np.round(x*n_farms) for x in plant_shortfall_hopp]
+                plant_curtailment_hopp = [np.round(x*n_farms) for x in plant_curtailment_hopp]
+
+                kw_continuous = electrolyzer_size_mw * 1000
+                load = [kw_continuous for x in
+                        range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
+                if battery_for_minimum_electrolyzer_op:
+                    battery_dispatch_load = list(0.15*np.array(load))
+                else:
+                    battery_dispatch_load = list(np.array(load))
+
+
             solar_size_mw_AC = solar_size_mw_DC/solar_DC_AC_ratio
 
             #if print_toggle:
@@ -443,9 +488,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             if run_wind_plant:
                 cf_wind_annuals = hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
                 wind_itc_total = hybrid_plant.wind._financial_model.Outputs.itc_total
-                wind_plant_power = hybrid_plant.wind.generation_profile[0:8759]
+                wind_plant_power = [np.round(x*n_farms) for x in hybrid_plant.wind.generation_profile[0:8759]]
                 if solar_size_mw_AC>0:
-                    solar_plant_power = hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]
+                    solar_plant_power = [np.round(x*n_farms) for x in hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]]
                     cf_solar_annuals=hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
                 else:
                     cf_solar_annuals = np.zeros(30)
@@ -454,7 +499,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     #ACTUAL WIND SIZE
                     hopp_dict.main_dict['Configuration']['n_Turbs']=hybrid_plant.wind._system_model.nTurbs
                     hopp_dict.main_dict['Configuration']['turb_rating_kw']=hybrid_plant.wind._system_model.turb_rating
-                    hopp_dict.main_dict['Configuration']['wind_size_mw']=hybrid_plant.wind._system_model.nTurbs*hybrid_plant.wind._system_model.turb_rating*(1/1000)
+                    hopp_dict.main_dict['Configuration']['wind_size_mw']=n_farms*hybrid_plant.wind._system_model.nTurbs*hybrid_plant.wind._system_model.turb_rating*(1/1000)
                     wind_size_mw=hybrid_plant.wind._system_model.nTurbs*hybrid_plant.wind._system_model.turb_rating*(1/1000)
                     renewable_plant_cost['wind']['size_mw']=wind_size_mw
                 combined_pv_wind_power_production_hopp = plant_power_production
@@ -463,13 +508,13 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 wind_itc_total = 0
                 # solar_storage_only_lcoe=copy.copy(lcoe)
                 if solar_size_mw_AC>0:
-                    pv_plant_power = hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]
-                    combined_pv_wind_power_production_hopp = np.array(pv_plant_power)# + np.array(wind_plant_power)
+                    pv_plant_power = [np.round(x*n_farms) for x in hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]]
+                    combined_pv_wind_power_production_hopp = np.array(pv_plant_power)*n_farms# + np.array(wind_plant_power)
                     cf_solar_annuals=hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
 
                 else:
                     if wind_size_mw > 0:
-                        combined_pv_wind_power_production_hopp= np.array(wind_plant_power) #plant_power_production+
+                        combined_pv_wind_power_production_hopp= np.array(wind_plant_power)*n_farms #plant_power_production+
                     else:
                         combined_pv_wind_power_production_hopp = np.zeros(8760)
                     cf_solar_annuals = np.zeros(30)
@@ -503,6 +548,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 kw_continuous,
                 plot_grid,
             )
+
+            #hydrogen_demand_kgphr = hydrogen_demand_kgphr*n_farms
 
             #if print_toggle:
                 #print('Energy to electrolyzer after battery (MWh): ' + str(sum(energy_to_electrolyzer)/1000))
@@ -641,6 +688,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             elif site_location == 'Site 7':
                 storage_type = 'Lined rock cavern'
 
+
+
             hydrogen_production_storage_system_output_kgprhr,hydrogen_storage_capacity_kg,hydrogen_storage_capacity_MWh_HHV,hydrogen_storage_duration_hr,hydrogen_storage_cost_USDprkg,storage_compressor_total_capacity_kW,storage_compressor_total_installed_cost_USD,storage_status_message\
                  = hopp_tools_steel.hydrogen_storage_capacity_cost_calcs(H2_Results,electrolyzer_size_mw,storage_type,hydrogen_demand_kgphr)
 
@@ -721,7 +770,6 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             grid_prices = pd.read_csv(os.path.join(project_path, "H2_Analysis", grid_price_filename),index_col = None,header = 0)
             elec_price = grid_prices.loc[grid_prices['Year']==grid_year,site_name].tolist()[0]
             grid_prices_interpolated_USDperkwh = grid_price_interpolation(grid_prices,site_name,atb_year,useful_life,'kWh')
-
 
 
             # h2_solution,h2_summary,h2_price_breakdown,lcoh_breakdown,electrolyzer_installed_cost_kw,elec_cf,ren_frac,electrolyzer_total_EI_policy_grid,electrolysis_total_EI_policy_offgrid,H2_PTC,Ren_PTC,h2_production_capex = run_profast_for_hydrogen. run_profast_for_hydrogen(hopp_dict,electrolyzer_size_mw,H2_Results,\
