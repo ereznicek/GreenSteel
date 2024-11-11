@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.4258581269372694
 20,Operating Expenses,Natural Gas,2.8108404996265848
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.7018065228337935
+22,Operating Expenses,Cash on hand reserve,3.369505639567401
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,11 +32,11 @@
 30,Financing cash outflow,Interest expense,14.138337995448868
 31,Operating Expenses,Carbon,15.327298391143913
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,34.15965235241591
+33,Financing cash outflow,Income taxes payable,33.86317912089803
 34,Operating Expenses,Electricity,57.045247679178416
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,98.58342664759816
-37,Operating Expenses,Hydrogen,438.99257493889536
+36,Financing cash outflow,Dividends paid,97.97189177789518
+37,Operating Expenses,Hydrogen,330.3050614637846
 38,Operating Expenses,Iron Ore,520.3974352549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Financing cash inflow,Monetized tax losses,3.571815654056047
-46,Operating Revenue,Cash on hand recovery,3.701806522833794
+45,Operating Revenue,Cash on hand recovery,3.3695056395674015
+46,Financing cash inflow,Monetized tax losses,3.5825186588039872
 47,Financing cash inflow,Inflow of debt,8.560300599623803
-48,Financing cash inflow,Inflow of equity,17.993537355896645
-49,Operating Revenue,Steel sales,1317.6758804007009
+48,Financing cash inflow,Inflow of equity,18.26820712120142
+49,Operating Revenue,Steel sales,1207.7949860543163

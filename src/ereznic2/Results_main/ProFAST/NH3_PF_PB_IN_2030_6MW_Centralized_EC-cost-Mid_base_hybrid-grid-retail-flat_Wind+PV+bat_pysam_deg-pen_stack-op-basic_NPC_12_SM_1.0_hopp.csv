@@ -20,23 +20,23 @@
 18,Financing cash outflow,Air Separation by Cryogenic,0.002964301270946252
 19,Financing cash outflow,Depreciable Nonequipment,0.0032623102416052376
 20,Operating Expenses,Administrative Expense,0.003626216209628507
-21,Financing cash outflow,Repayment of debt,0.004477222283062598
-22,Operating Expenses,Cash on hand reserve,0.00483894964255364
+21,Operating Expenses,Cash on hand reserve,0.003694789092583782
+22,Financing cash outflow,Repayment of debt,0.004477222283062598
 23,Operating Expenses,Property tax and insurance,0.006147155674344377
 24,Financing cash outflow,Interest expense,0.007394656435484999
-25,Financing cash outflow,Income taxes payable,0.01276116353796887
+25,Financing cash outflow,Income taxes payable,0.011675965781021633
 26,Operating Expenses,Electricity,0.01631201113709033
 27,Operating Expenses,Labor Cost,0.018131081048142532
-28,Financing cash outflow,Dividends paid,0.04482978065165048
-29,Operating Expenses,Hydrogen,1.6715151467211085
+28,Financing cash outflow,Dividends paid,0.04044300608029069
+29,Operating Expenses,Hydrogen,1.2607800606144037
 30,Operating Revenue,Take or pay revenue,0.0
 31,Operating Revenue,Incidental revenue,0.0
 32,Operating Revenue,Oxygen byproduct,0.0
 33,Financing cash inflow,One time capital incentive,0.0
 34,Financing cash inflow,Annual operating incentives,0.0
 35,Operating Revenue,Sale of non-depreciable assets,0.0002185902473509667
-36,Financing cash inflow,Monetized tax losses,0.00040136128381133146
-37,Financing cash inflow,Inflow of debt,0.004477222283062598
-38,Operating Revenue,Cash on hand recovery,0.00483894964255364
-39,Financing cash inflow,Inflow of equity,0.010351062064469141
-40,Operating Revenue,Ammonia sales,1.784665352968066
+36,Financing cash inflow,Monetized tax losses,0.00047887540930756286
+37,Operating Revenue,Cash on hand recovery,0.0036947890925837826
+38,Financing cash inflow,Inflow of debt,0.004477222283062598
+39,Financing cash inflow,Inflow of equity,0.009318715791098936
+40,Operating Revenue,Ammonia sales,1.3694131266809282

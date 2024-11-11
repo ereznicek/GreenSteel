@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.4258581269372694
 20,Operating Expenses,Natural Gas,2.8108404996265848
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.751735951167399
+22,Operating Expenses,Cash on hand reserve,3.76509198270889
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,11 +32,11 @@
 30,Financing cash outflow,Interest expense,14.138337995448868
 31,Operating Expenses,Carbon,15.327298391143913
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,34.204198544470565
+33,Financing cash outflow,Income taxes payable,34.21611457006893
 34,Operating Expenses,Electricity,57.045247679178416
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,98.67531200808904
-37,Operating Expenses,Hydrogen,455.3232730744853
+36,Financing cash outflow,Dividends paid,98.69989117540334
+37,Operating Expenses,Hydrogen,459.6917052130666
 38,Operating Expenses,Iron Ore,520.3974352549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Financing cash inflow,Monetized tax losses,3.570207488277903
-46,Operating Revenue,Cash on hand recovery,3.7517359511673987
+45,Financing cash inflow,Monetized tax losses,3.569777306848358
+46,Operating Revenue,Cash on hand recovery,3.76509198270889
 47,Financing cash inflow,Inflow of debt,8.560300599623803
-48,Financing cash inflow,Inflow of equity,17.95226721473003
-49,Operating Revenue,Steel sales,1334.1858883957807
+48,Financing cash inflow,Inflow of equity,17.941227526803697
+49,Operating Revenue,Steel sales,1338.6022855966307

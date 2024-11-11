@@ -19,9 +19,9 @@
 17,Financing cash outflow,Piping,1.3362766682963125
 18,Financing cash outflow,"Buildings, Storage, Water Service",2.0144006627414566
 19,Operating Expenses,Lime,2.4258581269372694
-20,Operating Expenses,Natural Gas,2.8108404996265848
-21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.3289157480945426
+20,Operating Expenses,Cash on hand reserve,2.7397438906609524
+21,Operating Expenses,Natural Gas,2.8108404996265848
+22,Financing cash outflow,Shaft Furnace,3.0338058013608475
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,11 +32,11 @@
 30,Financing cash outflow,Interest expense,14.138337995448868
 31,Operating Expenses,Carbon,15.327298391143913
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.826965505774
+33,Financing cash outflow,Income taxes payable,33.301316332724014
 34,Operating Expenses,Electricity,57.045247679178416
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,97.8971940107713
-37,Operating Expenses,Hydrogen,317.02909802653755
+36,Financing cash outflow,Dividends paid,96.81293828587883
+37,Operating Expenses,Hydrogen,124.32535446581193
 38,Operating Expenses,Iron Ore,520.3974352549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.3289157480945426
-46,Financing cash inflow,Monetized tax losses,3.583826009530484
+45,Operating Revenue,Cash on hand recovery,2.7397438906609524
+46,Financing cash inflow,Monetized tax losses,3.602802513972723
 47,Financing cash inflow,Inflow of debt,8.560300599623803
-48,Financing cash inflow,Inflow of equity,18.301757486325396
-49,Operating Revenue,Steel sales,1194.3732535189706
+48,Financing cash inflow,Inflow of equity,18.78874895687089
+49,Operating Revenue,Steel sales,999.5536370853151

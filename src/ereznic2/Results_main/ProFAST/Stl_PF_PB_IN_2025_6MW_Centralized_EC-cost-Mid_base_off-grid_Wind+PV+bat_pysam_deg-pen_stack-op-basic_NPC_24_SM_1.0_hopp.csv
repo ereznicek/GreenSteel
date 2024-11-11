@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.3359829269372687
 20,Financing cash outflow,Shaft Furnace,3.0338058013608475
 21,Operating Expenses,Natural Gas,3.1669297693539717
-22,Operating Expenses,Cash on hand reserve,3.7022942731012205
+22,Operating Expenses,Cash on hand reserve,3.480467208498965
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Installation cost,6.857286024682497
@@ -32,20 +32,20 @@
 30,Operating Expenses,Carbon,12.834206391143908
 31,Financing cash outflow,Interest expense,13.63098309297011
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.297177259780284
+33,Financing cash outflow,Income taxes payable,33.09926690205189
 34,Operating Expenses,Electricity,74.22178989784827
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,96.14712818277746
+36,Financing cash outflow,Dividends paid,95.73889879826731
 37,Operating Expenses,Iron Ore,403.4321419549815
-38,Operating Expenses,Hydrogen,538.9211713416602
+38,Operating Expenses,Hydrogen,466.36694928810596
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
 41,Operating Revenue,Oxygen sales,0.0
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Financing cash inflow,Monetized tax losses,3.582318550606544
-46,Operating Revenue,Cash on hand recovery,3.70229427310122
+45,Operating Revenue,Cash on hand recovery,3.480467208498965
+46,Financing cash inflow,Monetized tax losses,3.5894633288638853
 47,Financing cash inflow,Inflow of debt,8.253113822980819
-48,Financing cash inflow,Inflow of equity,17.276931389152185
-49,Operating Revenue,Steel sales,1311.689970009873
+48,Financing cash inflow,Inflow of equity,17.460286868600907
+49,Operating Revenue,Steel sales,1238.3391079563744

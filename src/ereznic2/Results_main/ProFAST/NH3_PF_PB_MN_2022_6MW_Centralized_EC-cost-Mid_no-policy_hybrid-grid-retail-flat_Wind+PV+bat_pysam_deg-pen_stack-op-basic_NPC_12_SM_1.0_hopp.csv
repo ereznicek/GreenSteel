@@ -20,23 +20,23 @@
 18,Financing cash outflow,Air Separation by Cryogenic,0.002964301270946252
 19,Financing cash outflow,Depreciable Nonequipment,0.0032623102416052376
 20,Operating Expenses,Administrative Expense,0.003626216209628507
-21,Financing cash outflow,Repayment of debt,0.004477222283062598
-22,Operating Expenses,Cash on hand reserve,0.004894247099674957
+21,Operating Expenses,Cash on hand reserve,0.0038855630930146948
+22,Financing cash outflow,Repayment of debt,0.004477222283062598
 23,Operating Expenses,Property tax and insurance,0.006147155674344377
 24,Financing cash outflow,Interest expense,0.007394656435484999
 25,Operating Expenses,Electricity,0.011437704648072998
-26,Financing cash outflow,Income taxes payable,0.012586986232971591
+26,Financing cash outflow,Income taxes payable,0.011630283415762091
 27,Operating Expenses,Labor Cost,0.018131081048142532
-28,Financing cash outflow,Dividends paid,0.04443225127666652
-29,Operating Expenses,Hydrogen,1.6963552297912967
+28,Financing cash outflow,Dividends paid,0.040564901234689706
+29,Operating Expenses,Hydrogen,1.3342540261263274
 30,Operating Revenue,Take or pay revenue,0.0
 31,Operating Revenue,Incidental revenue,0.0
 32,Operating Revenue,Oxygen byproduct,0.0
 33,Financing cash inflow,One time capital incentive,0.0
 34,Financing cash inflow,Annual operating incentives,0.0
 35,Operating Revenue,Sale of non-depreciable assets,0.0002185902473509667
-36,Financing cash inflow,Monetized tax losses,0.00035852721291064775
-37,Financing cash inflow,Inflow of debt,0.004477222283062598
-38,Operating Revenue,Cash on hand recovery,0.004894247099674957
-39,Financing cash inflow,Inflow of equity,0.010332458430122836
-40,Operating Revenue,Ammonia sales,1.8040363053227249
+36,Financing cash inflow,Monetized tax losses,0.0004268631284256093
+37,Operating Revenue,Cash on hand recovery,0.003885563093014695
+38,Financing cash inflow,Inflow of debt,0.004477222283062598
+39,Financing cash inflow,Inflow of equity,0.009422349114335555
+40,Operating Revenue,Ammonia sales,1.4379528221988416

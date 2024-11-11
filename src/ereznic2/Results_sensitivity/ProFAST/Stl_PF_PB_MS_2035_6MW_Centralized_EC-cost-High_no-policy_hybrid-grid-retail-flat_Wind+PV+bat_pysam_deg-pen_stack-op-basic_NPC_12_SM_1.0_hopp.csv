@@ -20,7 +20,7 @@
 18,Financing cash outflow,"Buildings, Storage, Water Service",2.0144006627414566
 19,Operating Expenses,Lime,2.5171829269372683
 20,Financing cash outflow,Shaft Furnace,3.0338058013608475
-21,Operating Expenses,Cash on hand reserve,3.5176676784112026
+21,Operating Expenses,Cash on hand reserve,3.2648132539688324
 22,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 23,Operating Expenses,Natural Gas,4.732145606464471
 24,Financing cash outflow,EAF & Casting,5.378405352315362
@@ -32,11 +32,11 @@
 30,Operating Expenses,Carbon,12.31665039114391
 31,Financing cash outflow,Interest expense,13.91761427398458
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.66482194014573
+33,Financing cash outflow,Income taxes payable,33.439229496390666
 34,Operating Expenses,Electricity,52.64757614486487
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,97.22758162542166
-37,Operating Expenses,Hydrogen,438.8216760305163
+36,Financing cash outflow,Dividends paid,96.7622524454771
+37,Operating Expenses,Hydrogen,356.1191613887177
 38,Operating Expenses,Iron Ore,471.3075301549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.517667678411202
-46,Financing cash inflow,Monetized tax losses,3.671126688443458
+45,Operating Revenue,Cash on hand recovery,3.264813253968832
+46,Financing cash inflow,Monetized tax losses,3.6792708199869604
 47,Financing cash inflow,Inflow of debt,8.42665961538576
-48,Financing cash inflow,Inflow of equity,18.004253602304843
-49,Operating Revenue,Steel sales,1260.490421214875
+48,Financing cash inflow,Inflow of equity,18.213255350164125
+49,Operating Revenue,Steel sales,1176.8798390699742

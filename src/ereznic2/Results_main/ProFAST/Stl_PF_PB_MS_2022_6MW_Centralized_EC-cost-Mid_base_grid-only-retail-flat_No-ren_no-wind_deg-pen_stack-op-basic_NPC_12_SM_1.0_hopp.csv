@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.5171829269372683
 20,Operating Expenses,Natural Gas,2.9384191858619975
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.849858062306172
+22,Operating Expenses,Cash on hand reserve,3.7590452272053065
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,20 +32,20 @@
 30,Operating Expenses,Carbon,12.31665039114391
 31,Financing cash outflow,Interest expense,13.91761427398458
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.63726875772201
+33,Financing cash outflow,Income taxes payable,33.55624708115887
 34,Operating Expenses,Electricity,53.88717909669765
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,97.06660001861428
+36,Financing cash outflow,Dividends paid,96.89947673343106
 37,Operating Expenses,Iron Ore,471.3075301549815
-38,Operating Expenses,Hydrogen,541.6421153416633
+38,Operating Expenses,Hydrogen,511.93945207541555
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
 41,Operating Revenue,Oxygen sales,0.0
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Financing cash inflow,Monetized tax losses,3.5117461934291
-46,Operating Revenue,Cash on hand recovery,3.8498580623061716
+45,Financing cash inflow,Monetized tax losses,3.514671163702136
+46,Operating Revenue,Cash on hand recovery,3.7590452272053065
 47,Financing cash inflow,Inflow of debt,8.42665961538576
-48,Financing cash inflow,Inflow of equity,17.462949686523825
-49,Operating Revenue,Steel sales,1363.2688866788167
+48,Financing cash inflow,Inflow of equity,17.538012803596008
+49,Operating Revenue,Steel sales,1333.2400903634775

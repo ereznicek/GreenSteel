@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.851134526937269
 20,Operating Expenses,Natural Gas,2.949134709974628
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.441021092322716
+22,Operating Expenses,Cash on hand reserve,3.1499288097749383
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Installation cost,6.618658870656437
@@ -32,20 +32,20 @@
 30,Financing cash outflow,Interest expense,13.479429867825607
 31,Operating Expenses,Carbon,14.668248391143912
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,32.749550333122976
+33,Financing cash outflow,Income taxes payable,32.4898427186606
 34,Operating Expenses,Electricity,53.352290662757554
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,94.74770129177382
+36,Financing cash outflow,Dividends paid,94.2120028027129
 37,Operating Expenses,Iron Ore,365.3723947549814
-38,Operating Expenses,Hydrogen,514.4795584587946
+38,Operating Expenses,Hydrogen,419.2703731237401
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
 41,Operating Revenue,Oxygen sales,0.0
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.4410210923227154
-46,Financing cash inflow,Monetized tax losses,3.611168914727533
+45,Operating Revenue,Cash on hand recovery,3.1499288097749383
+46,Financing cash inflow,Monetized tax losses,3.620544640881411
 47,Financing cash inflow,Inflow of debt,8.161353308803195
-48,Financing cash inflow,Inflow of equity,17.30201656763437
-49,Operating Revenue,Steel sales,1228.059339493103
+48,Financing cash inflow,Inflow of equity,17.54262456164122
+49,Operating Revenue,Steel sales,1131.804764334364

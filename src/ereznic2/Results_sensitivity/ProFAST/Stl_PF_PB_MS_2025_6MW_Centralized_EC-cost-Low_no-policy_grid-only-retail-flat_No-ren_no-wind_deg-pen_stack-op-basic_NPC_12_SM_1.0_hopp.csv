@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.5171829269372683
 20,Operating Expenses,Natural Gas,2.524048656020923
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.3561976816780064
+22,Operating Expenses,Cash on hand reserve,3.3756506082093654
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,11 +32,11 @@
 30,Operating Expenses,Carbon,12.31665039114391
 31,Financing cash outflow,Interest expense,13.91761427398458
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.755750211633945
+33,Financing cash outflow,Income taxes payable,33.77310578389277
 34,Operating Expenses,Electricity,43.55135062738873
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,97.6150216829311
-37,Operating Expenses,Hydrogen,390.8120835477415
+36,Financing cash outflow,Dividends paid,97.65082099461115
+37,Operating Expenses,Hydrogen,397.1746613228137
 38,Operating Expenses,Iron Ore,471.3075301549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.356197681678006
-46,Financing cash inflow,Monetized tax losses,3.6003889879567623
+45,Operating Revenue,Cash on hand recovery,3.3756506082093654
+46,Financing cash inflow,Monetized tax losses,3.5997624330015694
 47,Financing cash inflow,Inflow of debt,8.42665961538576
-48,Financing cash inflow,Inflow of equity,17.925286702593734
-49,Operating Revenue,Steel sales,1201.8045791933762
+48,Financing cash inflow,Inflow of equity,17.909207507400712
+49,Operating Revenue,Steel sales,1208.2370176025354

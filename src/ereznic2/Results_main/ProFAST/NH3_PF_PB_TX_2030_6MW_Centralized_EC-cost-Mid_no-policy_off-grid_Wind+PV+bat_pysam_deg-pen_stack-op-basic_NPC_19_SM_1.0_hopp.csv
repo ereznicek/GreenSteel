@@ -15,7 +15,7 @@
 13,Operating Expenses,Maintenance Cost,0.0009186076656436084
 14,Financing cash outflow,Boiler and Steam Turbine,0.0009310783349601288
 15,Operating Expenses,Installation cost,0.0011793589339429342
-16,Operating Expenses,Cash on hand reserve,0.0019500609887622433
+16,Operating Expenses,Cash on hand reserve,0.0018628754334748677
 17,Operating Expenses,Iron based catalyst,0.0021180315277480326
 18,Financing cash outflow,Haber Bosch,0.0024554621073396453
 19,Financing cash outflow,Air Separation by Cryogenic,0.002964301270946252
@@ -24,19 +24,19 @@
 22,Financing cash outflow,Repayment of debt,0.004477222283062598
 23,Operating Expenses,Property tax and insurance,0.006147155674344377
 24,Financing cash outflow,Interest expense,0.007394656435484999
-25,Financing cash outflow,Income taxes payable,0.009977020515480894
+25,Financing cash outflow,Income taxes payable,0.009897281257731594
 26,Operating Expenses,Electricity,0.012561950545213498
 27,Operating Expenses,Labor Cost,0.018131081048142532
-28,Financing cash outflow,Dividends paid,0.03477031876453113
-29,Operating Expenses,Hydrogen,0.6386977915933074
+28,Financing cash outflow,Dividends paid,0.03455654364584694
+29,Operating Expenses,Hydrogen,0.6073995908651293
 30,Operating Revenue,Take or pay revenue,0.0
 31,Operating Revenue,Incidental revenue,0.0
 32,Operating Revenue,Oxygen byproduct,0.0
 33,Financing cash inflow,One time capital incentive,0.0
 34,Financing cash inflow,Annual operating incentives,0.0
 35,Operating Revenue,Sale of non-depreciable assets,0.0002185902473509667
-36,Financing cash inflow,Monetized tax losses,0.0005904683749497618
-37,Operating Revenue,Cash on hand recovery,0.001950060988762243
+36,Financing cash inflow,Monetized tax losses,0.0005993282924774621
+37,Operating Revenue,Cash on hand recovery,0.0018628754334748675
 38,Financing cash inflow,Inflow of debt,0.004477222283062598
-39,Financing cash inflow,Inflow of equity,0.008869438306250215
-40,Operating Revenue,Ammonia sales,0.736561739238879
+39,Financing cash inflow,Inflow of equity,0.008911272152448316
+40,Operating Revenue,Ammonia sales,0.7049193303705416

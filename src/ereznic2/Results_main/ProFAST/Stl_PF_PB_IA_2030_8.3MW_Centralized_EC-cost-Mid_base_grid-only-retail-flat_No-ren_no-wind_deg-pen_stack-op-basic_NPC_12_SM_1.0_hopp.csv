@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.8134449269372688
 20,Operating Expenses,Natural Gas,2.9613731167814166
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.379648154248123
+22,Operating Expenses,Cash on hand reserve,3.3819454861033993
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Slag Disposal,7.085325067638375
@@ -32,11 +32,11 @@
 30,Financing cash outflow,Interest expense,13.83543742899793
 31,Operating Expenses,Carbon,14.35889839114391
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,33.59815403764602
+33,Financing cash outflow,Income taxes payable,33.60020367829805
 34,Operating Expenses,Electricity,53.09222878373024
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,97.11673356689427
-37,Operating Expenses,Hydrogen,412.64095400228206
+36,Financing cash outflow,Dividends paid,97.1209613574529
+37,Operating Expenses,Hydrogen,413.3923552159128
 38,Operating Expenses,Iron Ore,449.6056537549815
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
@@ -44,8 +44,8 @@
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.379648154248123
-46,Financing cash inflow,Monetized tax losses,3.6578153867510887
+45,Operating Revenue,Cash on hand recovery,3.3819454861033993
+46,Financing cash inflow,Monetized tax losses,3.657741392503726
 47,Financing cash inflow,Inflow of debt,8.376904227189433
-48,Financing cash inflow,Inflow of equity,17.917948522679872
-49,Operating Revenue,Steel sales,1213.3307454894098
+48,Financing cash inflow,Inflow of equity,17.916049618303454
+49,Operating Revenue,Steel sales,1214.0903970328748

@@ -21,7 +21,7 @@
 19,Operating Expenses,Lime,2.851134526937269
 20,Operating Expenses,Natural Gas,2.9394393768077114
 21,Financing cash outflow,Shaft Furnace,3.0338058013608475
-22,Operating Expenses,Cash on hand reserve,3.1696179537856066
+22,Operating Expenses,Cash on hand reserve,3.1689796150014877
 23,Operating Expenses,Maintenance Labor Cost,4.075284052281331
 24,Financing cash outflow,EAF & Casting,5.378405352315362
 25,Operating Expenses,Installation cost,6.618658870656437
@@ -32,20 +32,20 @@
 30,Financing cash outflow,Interest expense,13.479429867825607
 31,Operating Expenses,Carbon,14.668248391143912
 32,Operating Expenses,Administrative & Support Labor Cost,23.057162980646822
-33,Financing cash outflow,Income taxes payable,32.456067435895186
+33,Financing cash outflow,Income taxes payable,32.45549792082121
 34,Operating Expenses,Electricity,52.52004090682556
 35,Operating Expenses,Annual Operating Labor Cost,81.31578076159346
-36,Financing cash outflow,Dividends paid,94.06051860359477
+36,Financing cash outflow,Dividends paid,94.05934386574486
 37,Operating Expenses,Iron Ore,365.3723947549814
-38,Operating Expenses,Hydrogen,431.46520244465853
+38,Operating Expenses,Hydrogen,431.2564173986524
 39,Operating Revenue,Take or pay revenue,0.0
 40,Operating Revenue,Incidental revenue,0.0
 41,Operating Revenue,Oxygen sales,0.0
 42,Financing cash inflow,One time capital incentive,0.0
 43,Financing cash inflow,Annual operating incentives,0.0
 44,Operating Revenue,Sale of non-depreciable assets,0.0315040650406504
-45,Operating Revenue,Cash on hand recovery,3.169617953785607
-46,Financing cash inflow,Monetized tax losses,3.6860052660226503
+45,Operating Revenue,Cash on hand recovery,3.1689796150014877
+46,Financing cash inflow,Monetized tax losses,3.6860258261336227
 47,Financing cash inflow,Inflow of debt,8.161353308803195
-48,Financing cash inflow,Inflow of equity,17.677436342365638
-49,Operating Revenue,Steel sales,1142.7721166784345
+48,Financing cash inflow,Inflow of equity,17.677963973716757
+49,Operating Revenue,Steel sales,1142.5610391880423
