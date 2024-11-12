@@ -157,7 +157,7 @@ def batch_generator_kernel(arg_list):
     save_param_sweep_best_case=False
     #THESE ARE WORKING VARIABLES NOW
     solar_size_mw_AC = 0
-    solar_DC_AC_ratio = 1.3
+    solar_DC_AC_ratio = 1.34
     solar_size_mw_DC = solar_size_mw_AC*solar_DC_AC_ratio
     storage_size_mw = 0
     storage_size_mwh = 0
@@ -352,6 +352,7 @@ def batch_generator_kernel(arg_list):
 
     # Annual electricity requirement estimate based on 
     electricity_production_target_MWhpyr = hydrogen_production_target_kgpy*electrolyzer_energy_kWh_per_kg_estimate_EOL/1000
+    print('Annual electricity production target: ')
 
     if print_toggle:
         print('Annual electricity target (MWhpyr): ' + str(electricity_production_target_MWhpyr))
@@ -390,8 +391,8 @@ def batch_generator_kernel(arg_list):
 
             if run_pv_battery_sweep:
 
-                excess_capacity_fractions = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
-                #excess_capacity_fractions = [0.5]
+                #excess_capacity_fractions = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+                excess_capacity_fractions = [0.4]
 
                 wind_sizes_mw_max = []
                 solar_sizes_mw_AC_max = []
@@ -547,8 +548,8 @@ def batch_generator_kernel(arg_list):
         if run_pv_battery_sweep:
             solar_sizes_mw_AC = {}
             for j in range(len(wind_sizes_mw_max)):
-                   solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = np.linspace(0,solar_sizes_mw_AC_max[j],n_solar_size_steps_list[j]).tolist()   
-                   #solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = [0,1000,solar_sizes_mw_AC_max[j]]  
+                   #solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = np.linspace(0,solar_sizes_mw_AC_max[j],n_solar_size_steps_list[j]).tolist()   
+                   solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = [0,1000,solar_sizes_mw_AC_max[j]]  
         else:
             solar_sizes_mw_AC = np.linspace(0,solar_size_mw_AC_max,n_solar_size_steps).tolist()
         #solar_sizes_mw_AC = [0,solar_size_mw_AC_max/2,solar_size_mw_AC_max]
@@ -561,7 +562,7 @@ def batch_generator_kernel(arg_list):
         # else:
         #     n_pem_clusters = number_pem_stacks
 
-    kw_continuous = electrolyzer_size_mw * 1000
+    kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
     load = [kw_continuous for x in
             range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
     if battery_for_minimum_electrolyzer_op:
@@ -654,7 +655,7 @@ def batch_generator_kernel(arg_list):
 
             solar_size_mw_DC = solar_size_mw_AC*solar_DC_AC_ratio
 
-            kw_continuous = electrolyzer_size_mw * 1000
+            kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
             load = [kw_continuous for x in
                     range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
             if battery_for_minimum_electrolyzer_op:
@@ -784,7 +785,7 @@ def batch_generator_kernel(arg_list):
             electricity_production_target_MWhpyr = np.round(electricity_production_target_MWhpyr/n_farms,decimals = 3)
             #+hydrogen_demand_kgphr = hydrogen_demand_kgphr/n_farms
                 
-            kw_continuous = electrolyzer_size_mw * 1000
+            kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
             load = [kw_continuous for x in
                     range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
             if battery_for_minimum_electrolyzer_op:
@@ -832,7 +833,7 @@ def batch_generator_kernel(arg_list):
             energy_shortfall_hopp = [np.round(x*n_farms) for x in energy_shortfall_hopp]
             combined_pv_wind_curtailment_hopp = [np.round(x*n_farms) for x in combined_pv_wind_curtailment_hopp]
 
-            kw_continuous = electrolyzer_size_mw * 1000
+            kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
             load = [kw_continuous for x in
                     range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
             if battery_for_minimum_electrolyzer_op:
@@ -952,6 +953,7 @@ def batch_generator_kernel(arg_list):
         cf_wind = 0
         wind_annual_energy_MWh = 0
 
+    []
 
     # Step #: Calculate hydrogen pipe costs for distributed case
     if electrolysis_scale == 'Distributed':

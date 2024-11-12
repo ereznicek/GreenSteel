@@ -107,7 +107,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
     else:
         storage_sizes_mwh=battery_sizes_mwh
     battery_for_minimum_electrolyzer_op=True #If true, then dispatch battery (if on) to supply minimum power for operation to PEM, otherwise use it for rated PEM power
-    kw_continuous = electrolyzer_size_mw * 1000
+    kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
     load = [kw_continuous for x in
             range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
     if battery_for_minimum_electrolyzer_op:
@@ -213,6 +213,21 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
         solar_sizes_mw_AC = solar_test_sizes_mw_AC['Wind Size (MW) = ' + str(wind_size_mw)]
 
         for si,solar_size_mw_AC in enumerate(solar_sizes_mw_AC):
+            #Moving some things here to delete them later to save memory; thus they need to be re-initialized within the loop
+            hopp_dict=copy.copy(hopp_dict_init)
+            hopp_dict.main_dict['Configuration']['wind_om_cost_kw']=wind_om_cost_kw
+            hopp_dict.main_dict['Configuration']['wind_cost_kw']=wind_cost_kw
+
+            kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
+            load = [kw_continuous for x in
+                    range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
+            if battery_for_minimum_electrolyzer_op:
+                battery_dispatch_load = list(0.15*np.array(load))
+            else:
+                battery_dispatch_load = list(np.array(load))
+
+
+
             solar_desc='{}MW_Solar'.format(solar_size_mw_AC)
             wind_size_mw = wind_size_mw_max
             #print(solar_desc)
@@ -225,7 +240,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 solar_om_cost_kw_AC=0
                 solar_cost_kw_AC=0
 
-            solar_DC_AC_ratio = 1.3
+            solar_DC_AC_ratio = 1.34
             solar_size_mw_DC = solar_size_mw_AC*solar_DC_AC_ratio
             solar_cost_kw_DC = solar_cost_kw_AC/solar_DC_AC_ratio
             solar_om_cost_kw_DC = solar_om_cost_kw_AC/solar_DC_AC_ratio
@@ -238,7 +253,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             'size_mw':solar_size_mw_AC}
 
             if grid_connection_scenario == 'off-grid':
-                storage_size_mw = 0.15*electrolyzer_size_mw
+                storage_size_mw = 0#0.15*electrolyzer_size_mw
                 storage_hours = 1
                 storage_size_mwh = storage_size_mw*storage_hours
             else:
@@ -368,11 +383,27 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 
                 combined_vre_power_mWh = solar_power_norm_AC*solar_size_mw_AC +wind_power_norm*wind_size_mw
 
+                combined_vre_power_mWh_sorted = combined_vre_power_mWh.tolist()
+                combined_vre_power_mWh_sorted.sort()
+
+                mWh_electricity_total_capacity_j = 0
+                mWh_electricity_total_estimate = 0
+                for j in range(len(combined_vre_power_mWh_sorted)):
+                    if mWh_electricity_total_estimate < electricity_production_target_MWhpyr:
+                        capacity_mw_j = combined_vre_power_mWh_sorted[j]
+                        mWh_electricity_total_capacity_j = mWh_electricity_total_capacity_j + combined_vre_power_mWh_sorted[j]
+                        mWh_electricity_total_estimate = mWh_electricity_total_capacity_j + capacity_mw_j*(len(combined_vre_power_mWh_sorted)-j)
+                        []
+                    else:
+                        electrolyzer_capacity_EOL_min = combined_vre_power_mWh_sorted[j]
+                        break
+
                 combined_vre_power_mWh_noexcess = solar_power_norm_AC*solar_size_mw_AC + wind_power_norm*wind_size_mw_noexcess
 
                 #electrolyzer_capacity_EOL_MW = max(max(combined_vre_power_mWh),wind_size_mw_calc/(1+electrolyzer_degradation_power_increase))
                 #electrolyzer_capacity_EOL_MW = max(max(combined_vre_power_mWh),wind_size_mw,solar_size_mw)
-                electrolyzer_capacity_EOL_MW = max(combined_vre_power_mWh_noexcess)
+                #electrolyzer_capacity_EOL_MW = max(combined_vre_power_mWh_noexcess)
+                electrolyzer_capacity_EOL_MW = electrolyzer_capacity_EOL_min
                 electrolyzer_capacity_BOL_MW = electrolyzer_capacity_EOL_MW/(1+electrolyzer_degradation_power_increase)
                 n_pem_clusters_max = int(np.ceil(np.ceil(electrolyzer_capacity_BOL_MW)/cluster_cap_mw))
                 electrolyzer_size_mw = n_pem_clusters_max*cluster_cap_mw
@@ -401,7 +432,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                     electricity_production_target_MWhpyr = np.round(electricity_production_target_MWhpyr/n_farms,decimals = 3)
                     #+hydrogen_demand_kgphr = hydrogen_demand_kgphr/n_farms
                 
-                kw_continuous = electrolyzer_size_mw * 1000
+                kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
                 load = [kw_continuous for x in
                         range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
                 if battery_for_minimum_electrolyzer_op:
@@ -472,7 +503,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 plant_shortfall_hopp = [np.round(x*n_farms) for x in plant_shortfall_hopp]
                 plant_curtailment_hopp = [np.round(x*n_farms) for x in plant_curtailment_hopp]
 
-                kw_continuous = electrolyzer_size_mw * 1000
+                kw_continuous = electrolyzer_size_mw*(1+electrolyzer_degradation_power_increase) * 1000
                 load = [kw_continuous for x in
                         range(0, 8760)]  # * (sin(x) + pi) Set desired/required load profile for plant
                 if battery_for_minimum_electrolyzer_op:
@@ -868,6 +899,53 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
 
 
             min_lcoh=np.min([min_lcoh,lcoh_init])
+            # Delete stuff to save memory during loop
+            del hybrid_plant
+            del H2_Results
+            del energy_to_electrolyzer
+            del electrical_generation_timeseries
+            del combined_pv_wind_power_production_hopp
+            del combined_pv_wind_storage_power_production_hopp
+            del combined_pv_wind_curtailment_hopp
+            del energy_shortfall_hopp
+            del excess_energy
+            del plant_curtailment_hopp
+            del plant_power_production
+            del plant_shortfall_hopp
+            del load
+            del battery_dispatch_load
+            #del solar_plant_power
+            #del wind_plant_power
+            del hopp_dict
+            del hopp_dict_cfest
+            del plant_power_production_cfest
+            del plant_shortfall_hopp_cfest
+            del plant_curtailment_hopp_cfest
+            del hybrid_plant_cfest
+            del cost_to_buy_from_grid
+            del profit_from_selling_to_grid
+            del electrolyzer_efficiency_while_running
+            del water_consumption_while_running
+            del hydrogen_production_while_running
+            #del h2_performance
+            del h2_solution
+            del h2_summary
+            del h2_transmission_economics_from_profast
+            del h2_transmission_economics_summary
+            del h2_transmission_price_breakdown
+            del pf_breakdown
+            del pf_summary
+
+            if grid_connection_scenario == 'off-grid':
+                del wind_power_norm
+                del solar_power_norm_AC
+                del combined_vre_power_mWh
+                del combined_vre_power_mWh_sorted
+                del combined_vre_power_mWh_noexcess
+                del battery_used
+
+            []
+
     #end=time.perf_counter()
     #print('Took {} sec to run parameter sweep'.format(round(end-start,3)))
     best_result_data={'HOPP_dict':best_hopp_dict,
