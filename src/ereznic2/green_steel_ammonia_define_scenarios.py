@@ -21,7 +21,7 @@ from green_steel_ammonia_run_scenarios import batch_generator_kernel
 project_path = os.path.abspath('')
 hopp_path = os.path.dirname(os.path.abspath(hopp.__file__))
 
-results_dir_name = 'Results_test'
+results_dir_name = 'Results_main'
 
 results_dir = os.path.join(project_path, "H2_Analysis", "results")
 fin_sum_dir = os.path.join(project_path, results_dir_name, "Fin_sum")
@@ -64,7 +64,7 @@ save_hybrid_plant_yaml = True # hybrid_plant requires special processing of the 
 save_model_input_yaml = True # saves the inputs for each model/major function
 save_model_output_yaml = True # saves the outputs for each model/major function
 
-print_toggle =True
+print_toggle =False
 
 # Target steel production rate. Note that this is the production after taking into account
 # steel plant capacity factor. E.g., if CF is 0.9, divide the number below by 0.9 to get
@@ -76,24 +76,24 @@ if __name__ == '__main__':
 
     atb_years = [
                 2022,
-                #2025,
-                #2030,
-                #2035
+                2025,
+                2030,
+                2035
                 ]
 
     policy = {
         'no-policy': {'Wind ITC': 0, 'Wind PTC': 0, "H2 PTC": 0, 'Storage ITC': 0},
-        #'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
-        #'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
+        'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
+        'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
     }
 
 
     site_selection = [
                     'Site 1',
-                    #'Site 2',
-                    #'Site 3',
-                    #'Site 4',
-                    #'Site 5'
+                    'Site 2',
+                    'Site 3',
+                    'Site 4',
+                    'Site 5'
                     ]
 
     electrolysis_cases = [
@@ -161,14 +161,14 @@ if __name__ == '__main__':
                                                     steel_annual_production_rate_target_tpy,project_path,results_dir,fin_sum_dir,energy_profile_dir,price_breakdown_dir,rodeo_output_dir,floris_dir,renewable_cost_path,\
                                                 save_hybrid_plant_yaml,save_model_input_yaml,save_model_output_yaml,num_pem_stacks,run_solar_param_sweep,electrolyzer_degradation_penalty,\
                                                     pem_control_type,storage_capacity_multiplier,solar_ITC,grid_price_filename,print_toggle])
-    for runs in range(len(arg_list)):
-        batch_generator_kernel(arg_list[runs])
-    []
+    # for runs in range(len(arg_list)):
+    #     batch_generator_kernel(arg_list[runs])
+    # []
 # ------------------ Run HOPP-RODeO/PyFAST Framework to get LCOH ---------------
-    # def error_callback(e):
-    #     print(f"Task failed with error: {e}")
+    def error_callback(e):
+        print(f"Task failed with error: {e}")
 
-    # with Pool(processes=4,maxtasksperchild=1) as pool:
-    #         pool.map_async(batch_generator_kernel, arg_list,error_callback=error_callback)
-    #         pool.close()
-    #         pool.join()
+    with Pool(processes=4,maxtasksperchild=1) as pool:
+            pool.map_async(batch_generator_kernel, arg_list,error_callback=error_callback)
+            pool.close()
+            pool.join()

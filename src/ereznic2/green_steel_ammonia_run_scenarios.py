@@ -391,8 +391,8 @@ def batch_generator_kernel(arg_list):
 
             if run_pv_battery_sweep:
 
-                #excess_capacity_fractions = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
-                excess_capacity_fractions = [0.4]
+                excess_capacity_fractions = [0, 0.1, 0.2, 0.3]#, 0.4, 0.5]
+                #excess_capacity_fractions = [0.3]
 
                 wind_sizes_mw_max = []
                 solar_sizes_mw_AC_max = []
@@ -412,6 +412,7 @@ def batch_generator_kernel(arg_list):
 
                 electrolyzer_capacity_BOL_MW_wind = electrolyzer_capacity_EOL_MW_wind/(1+electrolyzer_degradation_power_increase)
                 electrolyzer_capacity_BOL_MW_solar = electrolyzer_capacity_EOL_MW_solar/(1+electrolyzer_degradation_power_increase)
+                []
 
             else:
                 n_turbines = int(np.ceil(np.ceil(wind_size_mw_estimate)/turbine_rating))
@@ -548,8 +549,8 @@ def batch_generator_kernel(arg_list):
         if run_pv_battery_sweep:
             solar_sizes_mw_AC = {}
             for j in range(len(wind_sizes_mw_max)):
-                   #solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = np.linspace(0,solar_sizes_mw_AC_max[j],n_solar_size_steps_list[j]).tolist()   
-                   solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = [0,1000,solar_sizes_mw_AC_max[j]]  
+                   solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = np.linspace(0,solar_sizes_mw_AC_max[j],n_solar_size_steps_list[j]).tolist()   
+                   #solar_sizes_mw_AC['Wind Size (MW) = ' + str(wind_sizes_mw_max[j])] = [0,1000,solar_sizes_mw_AC_max[j]]  
         else:
             solar_sizes_mw_AC = np.linspace(0,solar_size_mw_AC_max,n_solar_size_steps).tolist()
         #solar_sizes_mw_AC = [0,solar_size_mw_AC_max/2,solar_size_mw_AC_max]
@@ -637,7 +638,7 @@ def batch_generator_kernel(arg_list):
             sell_price,buy_price,discount_rate,debt_equity_split,\
             electrolyzer_size_mw,electrolyzer_capacity_EOL_MW,n_pem_clusters,pem_control_type,hydrogen_demand_kgphr,\
             electrolyzer_capex_kw,electrolyzer_component_costs_kw,wind_plant_degradation_power_decrease,electrolyzer_energy_kWh_per_kg,time_between_replacement,\
-            user_defined_stack_replacement_time,use_optimistic_pem_efficiency,electrolyzer_degradation_penalty,storage_capacity_multiplier,hydrogen_production_capacity_required_kgphr,\
+            user_defined_stack_replacement_time,use_optimistic_pem_efficiency,electrolyzer_degradation_penalty,storage_capacity_multiplier,hydrogen_production_capacity_required_kgphr,electrolyzer_energy_kWh_per_kg_estimate_BOL,\
             electrolyzer_model_parameters,electricity_production_target_MWhpyr,turbine_rating,electrolyzer_degradation_power_increase,cluster_cap_mw,interconnection_size_mw,solar_ITC,grid_price_filename,\
             gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,hydrogen_production_target_kgpy,print_toggle,excess_capacity_fractions]
             #if solar and battery size lists are set to 'None' then defaults will be used

@@ -66,7 +66,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
      sell_price,buy_price,discount_rate,debt_equity_split,\
      electrolyzer_size_mw,electrolyzer_capacity_EOL_MW,n_pem_clusters,pem_control_type,hydrogen_demand_kgphr,
      electrolyzer_capex_kw,electrolyzer_component_costs_kw,wind_plant_degradation_power_decrease,electrolyzer_energy_kWh_per_kg, time_between_replacement,
-     user_defined_stack_replacement_time,use_optimistic_pem_efficiency,electrolyzer_degradation_penalty,storage_capacity_multiplier,hydrogen_production_capacity_required_kgphr,\
+     user_defined_stack_replacement_time,use_optimistic_pem_efficiency,electrolyzer_degradation_penalty,storage_capacity_multiplier,hydrogen_production_capacity_required_kgphr,electrolyzer_energy_kWh_per_kg_estimate_BOL,\
      electrolyzer_model_parameters,electricity_production_target_MWhpyr,turbine_rating,electrolyzer_degradation_power_increase,cluster_cap_mw,interconnection_size_mw,solar_ITC,grid_price_filename,
      gams_locations_rodeo_version,rodeo_output_dir,run_RODeO_selector,hydrogen_production_target_kgpy,print_toggle,excess_capacity_fractions] = arg_list
 
@@ -253,7 +253,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             'size_mw':solar_size_mw_AC}
 
             if grid_connection_scenario == 'off-grid':
-                storage_size_mw = 0#0.15*electrolyzer_size_mw
+                storage_size_mw = 0.15*electrolyzer_size_mw
                 storage_hours = 1
                 storage_size_mwh = storage_size_mw*storage_hours
             else:
@@ -391,8 +391,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 for j in range(len(combined_vre_power_mWh_sorted)):
                     if mWh_electricity_total_estimate < electricity_production_target_MWhpyr:
                         capacity_mw_j = combined_vre_power_mWh_sorted[j]
-                        mWh_electricity_total_capacity_j = mWh_electricity_total_capacity_j + combined_vre_power_mWh_sorted[j]
-                        mWh_electricity_total_estimate = mWh_electricity_total_capacity_j + capacity_mw_j*(len(combined_vre_power_mWh_sorted)-j)
+                        if capacity_mw_j >= 6:
+                            mWh_electricity_total_capacity_j = mWh_electricity_total_capacity_j + combined_vre_power_mWh_sorted[j]
+                            mWh_electricity_total_estimate = mWh_electricity_total_capacity_j + capacity_mw_j*(len(combined_vre_power_mWh_sorted)-j)
                         []
                     else:
                         electrolyzer_capacity_EOL_min = combined_vre_power_mWh_sorted[j]
@@ -407,6 +408,19 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 electrolyzer_capacity_BOL_MW = electrolyzer_capacity_EOL_MW/(1+electrolyzer_degradation_power_increase)
                 n_pem_clusters_max = int(np.ceil(np.ceil(electrolyzer_capacity_BOL_MW)/cluster_cap_mw))
                 electrolyzer_size_mw = n_pem_clusters_max*cluster_cap_mw
+
+                storage_size_mw = 0.15*electrolyzer_size_mw
+                storage_size_mwh = storage_size_mw*storage_hours
+
+                if print_toggle:
+                    print('Old hourly h2 prod capacity (kg/hr): '+ str(hydrogen_production_capacity_required_kgphr))
+
+                hydrogen_production_capacity_required_kgphr = electrolyzer_size_mw*1000/electrolyzer_energy_kWh_per_kg_estimate_BOL
+
+                if print_toggle:
+                    print ('New hourly h2 prod capacity (kg/hr): '+ str(hydrogen_production_capacity_required_kgphr))
+
+
                 if print_toggle:
                     print('Excess VRE capacity: ' + str(excess_capacity_percent) + ' (%)')
                     print('Solar size: ' +str(solar_size_mw_AC) + ' MW')
@@ -580,6 +594,8 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 plot_grid,
             )
 
+            if print_toggle:
+                print('Annual energy to electrolyzer relative to required: ' + str(sum(energy_to_electrolyzer)/electricity_production_target_MWhpyr/1000))
             #hydrogen_demand_kgphr = hydrogen_demand_kgphr*n_farms
 
             #if print_toggle:
@@ -695,6 +711,9 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             )
 
             hydrogen_annual_production = H2_Results['hydrogen_annual_output']
+
+            if print_toggle:
+                print('Annual h2 production relative to target: ' + str(hydrogen_annual_production/hydrogen_production_target_kgpy))
 
             #if print_toggle:
                 #print('Actual hydrogen annual production (kgpyr): ' + str(hydrogen_annual_production))
