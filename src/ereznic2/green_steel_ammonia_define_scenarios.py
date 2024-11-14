@@ -76,15 +76,15 @@ if __name__ == '__main__':
 
     atb_years = [
                 2022,
-                2025,
-                2030,
-                2035
+                #2025,
+                #2030,
+                #2035
                 ]
 
     policy = {
         'no-policy': {'Wind ITC': 0, 'Wind PTC': 0, "H2 PTC": 0, 'Storage ITC': 0},
-        'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
-        'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
+        #'base': {'Wind ITC': 0, 'Wind PTC':  0.0055341, "H2 PTC": 0.6, 'Storage ITC': 0.06},
+        #'max': {'Wind ITC': 0, 'Wind PTC': 0.0332046, "H2 PTC": 3.0, 'Storage ITC': 0.5},
     }
 
 
@@ -102,9 +102,9 @@ if __name__ == '__main__':
                           ]
 
     electrolyzer_cost_cases = [
-                                #'Low',
-                                'Mid',
-                                #'High'
+                                'Low',
+                                #'Mid',
+                                'High'
                                 ]
 
     grid_connection_cases = [
@@ -168,7 +168,7 @@ if __name__ == '__main__':
     def error_callback(e):
         print(f"Task failed with error: {e}")
 
-    with Pool(processes=4,maxtasksperchild=1) as pool:
+    with Pool(processes=3,maxtasksperchild=1) as pool:
             pool.map_async(batch_generator_kernel, arg_list,error_callback=error_callback)
             pool.close()
             pool.join()

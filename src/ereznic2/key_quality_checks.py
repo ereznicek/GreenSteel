@@ -18,6 +18,7 @@ parent_path = os.path.abspath('')
 # Initialization and Global Settings
 #Specify directory name
 main_directory = 'Results_main/Fin_sum'
+#main_directory = 'Results_sensitivity/Fin_sum'
 
 retail_string = 'retail-flat'
 

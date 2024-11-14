@@ -531,12 +531,12 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
             #if print_toggle:
                 #print('Actual wind/solar electricity output (MWh): ' + str(sum(plant_power_production)/1000))
             if run_wind_plant:
-                cf_wind_annuals = hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
-                wind_itc_total = hybrid_plant.wind._financial_model.Outputs.itc_total
+                cf_wind_annuals = np.zeros(30)#hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
+                wind_itc_total = 0#hybrid_plant.wind._financial_model.Outputs.itc_total
                 wind_plant_power = [np.round(x*n_farms) for x in hybrid_plant.wind.generation_profile[0:8759]]
                 if solar_size_mw_AC>0:
                     solar_plant_power = [np.round(x*n_farms) for x in hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]]
-                    cf_solar_annuals=hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
+                    cf_solar_annuals=np.zeros(30)#hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
                 else:
                     cf_solar_annuals = np.zeros(30)
                 #hopp_dict.main_dict['Configuration']['wind_plant_object']=hybrid_plant.wind
@@ -555,7 +555,7 @@ def solar_storage_param_sweep(project_path,arg_list,save_best_solar_case_pickle,
                 if solar_size_mw_AC>0:
                     pv_plant_power = [np.round(x*n_farms) for x in hybrid_plant.pv.generation_profile[0:len(wind_plant_power)]]
                     combined_pv_wind_power_production_hopp = np.array(pv_plant_power)*n_farms# + np.array(wind_plant_power)
-                    cf_solar_annuals=hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
+                    cf_solar_annuals=np.zeros(30)#hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
 
                 else:
                     if wind_size_mw > 0:

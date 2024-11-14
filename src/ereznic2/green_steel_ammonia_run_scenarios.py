@@ -352,7 +352,6 @@ def batch_generator_kernel(arg_list):
 
     # Annual electricity requirement estimate based on 
     electricity_production_target_MWhpyr = hydrogen_production_target_kgpy*electrolyzer_energy_kWh_per_kg_estimate_EOL/1000
-    print('Annual electricity production target: ')
 
     if print_toggle:
         print('Annual electricity target (MWhpyr): ' + str(electricity_production_target_MWhpyr))
@@ -852,13 +851,13 @@ def batch_generator_kernel(arg_list):
         
         solar_size_mw_AC = solar_size_mw_DC/solar_DC_AC_ratio
         if wind_size_mw > 0:
-            cf_wind_annuals = hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
-            wind_itc_total = hybrid_plant.wind._financial_model.Outputs.itc_total
+            cf_wind_annuals = np.zeros(30)#hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
+            wind_itc_total = 0#hybrid_plant.wind._financial_model.Outputs.itc_total
         else:
             cf_wind_annuals = np.zeros(30)
             wind_itc_total = 0
         if solar_size_mw_AC >0:
-            cf_solar_annuals = hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
+            cf_solar_annuals = np.zeros(30)#hybrid_plant.pv._financial_model.Outputs.cf_annual_costs
         else:
             cf_solar_annuals = np.zeros(30)
         
@@ -1348,8 +1347,8 @@ def batch_generator_kernel(arg_list):
     # else:
     policy_option,turbine_model,scenario['Useful Life'], wind_cost_kw, solar_cost_kw,\
     scenario['Debt Equity'], atb_year, scenario['H2 PTC'],scenario['Wind ITC'],\
-    discount_rate, tlcc_wind_costs, tlcc_solar_costs, tlcc_hvdc_costs, tlcc_total_costs,run_RODeO_selector,lcoh,\
-    wind_itc_total, total_itc_hvdc = hopp_tools_steel.write_outputs_ProFAST(electrical_generation_timeseries,\
+    discount_rate, run_RODeO_selector,lcoh,\
+    wind_itc_total,total_itc_hvdc = hopp_tools_steel.write_outputs_ProFAST(electrical_generation_timeseries,\
                         cf_wind_annuals,
                         cf_solar_annuals,
                         wind_itc_total,

@@ -1675,12 +1675,12 @@ def write_outputs_ProFAST(electrical_generation_timeseries,
     # Cashflow Financial Calculation
     discount_rate = scenario['Discount Rate']
 
-    cf_hvdc_annuals = - simple_cash_annuals(useful_life,useful_life,total_export_system_cost,total_export_om_cost,0.03)
+    #cf_hvdc_annuals = - simple_cash_annuals(useful_life,useful_life,total_export_system_cost,total_export_om_cost,0.03)
 
     hvdc_itc = (scenario['Wind ITC']/100) * total_export_system_cost
-    cf_hvdc_itc = [0]*30
-    cf_hvdc_itc[1] = hvdc_itc
-    cf_hvdc_annuals = np.add(cf_hvdc_annuals,cf_hvdc_itc)
+    #cf_hvdc_itc = [0]*30
+    #cf_hvdc_itc[1] = hvdc_itc
+    #cf_hvdc_annuals = np.add(cf_hvdc_annuals,cf_hvdc_itc)
 
 # `    if grid_connection_scenario != 'grid-only':
 #         #cf_wind_annuals = hybrid_plant.wind._financial_model.Outputs.cf_annual_costs
@@ -1692,21 +1692,21 @@ def write_outputs_ProFAST(electrical_generation_timeseries,
 #         #cf_wind_annuals = np.zeros(30)
 #         cf_solar_annuals = np.zeros(30)`
 
-    cf_df = pd.DataFrame([cf_wind_annuals, cf_solar_annuals],['Wind', 'Solar'])
+    #cf_df = pd.DataFrame([cf_wind_annuals, cf_solar_annuals],['Wind', 'Solar'])
 
     #cf_df.to_csv(os.path.join(results_dir, "Annual Cashflows_{}_{}_{}_discount_{}_{}MW.csv".format(site_name, scenario_choice, atb_year, discount_rate,turbine_rating_mw)))
 
     #Calculate total lifecycle cost for each technology (TLCC)
-    tlcc_wind_costs = npf.npv(discount_rate, cf_wind_annuals)
+    tlcc_wind_costs = 0#npf.npv(discount_rate, cf_wind_annuals)
     #print('npv wind: ',tlcc_wind_costs)
-    tlcc_solar_costs = npf.npv(discount_rate, cf_solar_annuals)
+    tlcc_solar_costs = 0#npf.npv(discount_rate, cf_solar_annuals)
 
-    tlcc_hvdc_costs = npf.npv(discount_rate, cf_hvdc_annuals)
+    tlcc_hvdc_costs = 0#npf.npv(discount_rate, cf_hvdc_annuals)
 
-    tlcc_total_costs = tlcc_wind_costs+tlcc_solar_costs + tlcc_hvdc_costs
+    tlcc_total_costs = 0#tlcc_wind_costs+tlcc_solar_costs + tlcc_hvdc_costs
 
 
-    # # Total amount of ITC [USD]
+    # Total amount of ITC [USD]
     # if grid_connection_scenario != 'grid-only':
     #     wind_itc_total = hybrid_plant.wind._financial_model.Outputs.itc_total
     # else:
@@ -1873,8 +1873,7 @@ def write_outputs_ProFAST(electrical_generation_timeseries,
 
     return policy_option,turbine_model,scenario['Useful Life'], wind_cost_kw, solar_cost_kw,\
            scenario['Debt Equity'], atb_year, scenario['H2 PTC'],scenario['Wind ITC'],\
-           discount_rate, tlcc_wind_costs, tlcc_solar_costs, tlcc_hvdc_costs, tlcc_total_costs,run_RODeO_selector,lcoh,\
-           wind_itc_total, total_itc_hvdc\
+           discount_rate,run_RODeO_selector,lcoh,wind_itc_total, total_itc_hvdc#, tlcc_wind_costs, tlcc_solar_costs, tlcc_hvdc_costs, tlcc_total_costs,run_RODeO_selector,lcoh,wind_itc_total, total_itc_hvdc\
 
 def write_outputs_ProFAST_SMR(fin_sum_dir,
                      price_breakdown_dir,

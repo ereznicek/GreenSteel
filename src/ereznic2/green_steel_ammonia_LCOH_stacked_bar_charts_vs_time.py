@@ -135,6 +135,7 @@ for electrolysis_case in electrolysis_cases:
             desal_and_water = {}
             taxes_and_financial = {}
             bulk_transmission = {}
+            grid_transmission = {}
             lcoh_nopolicy={}
             lcoh_base_policy_savings={}
             lcoh_max_policy_savings = {}
@@ -157,6 +158,7 @@ for electrolysis_case in electrolysis_cases:
                 desal_and_water[site] = desal_cap_cost[site]+desal_FOM[site]+water_consumption[site]
                 taxes_and_financial[site] = np.array(fin_sum_usecase.loc[fin_sum_usecase['Site']==site,'LCOH: Taxes and Finances ($/kg)'].values.tolist())
                 bulk_transmission[site] = np.array(fin_sum_usecase.loc[fin_sum_usecase['Site']==site,'LCOH: Bulk H2 Transmission ($/kg)'].values.tolist())
+                grid_transmission[site] = np.array(fin_sum_usecase.loc[fin_sum_usecase['Site']==site,'LCOH: Grid Transmission ($/kg)'].values.tolist())
                 elec_capex_FOM[site]=elec_cap_cost[site]+elec_FOM[site]
                 wind_capex_FOM[site]=wind_cap_cost[site]+wind_FOM[site]
                 solar_capex_FOM[site]=solar_cap_cost[site]+solar_FOM[site]
@@ -176,7 +178,9 @@ for electrolysis_case in electrolysis_cases:
                 barbottom=barbottom+desal_and_water[site]
                 ax.bar(labels,bulk_transmission[site],width,bottom=barbottom,label='Bulk H2 Transmission',edgecolor='crimson',color='crimson')
                 barbottom = barbottom+bulk_transmission[site]
-    
+                ax.bar(labels,grid_transmission[site],width,bottom=barbottom,label='Grid Transmission',edgecolor = 'magenta',color = 'magenta')
+                barbottom = barbottom+grid_transmission[site]
+
                 if grid_case == 'off-grid' or 'hybrid-grid-'+retail_string:
                     ax.bar(labels,wind_capex_FOM[site],width,bottom=barbottom,label = 'Wind CAPEX & FOM',edgecolor='deepskyblue',color='deepskyblue')
                     barbottom=barbottom+wind_capex_FOM[site]
@@ -269,6 +273,8 @@ for electrolysis_case in electrolysis_cases:
                     barbottom=barbottom+desal_and_water[site]
                     ax[axi1,axi2].bar(labels,bulk_transmission[site],width,bottom=barbottom,label='Bulk H2 Transmission',edgecolor='crimson',color='crimson')
                     barbottom = barbottom+bulk_transmission[site]
+                    ax[axi1,axi2].bar(labels,grid_transmission[site],width,bottom=barbottom,label='Grid Transmission',edgecolor='magenta',color='magenta')
+                    barbottom = barbottom+grid_transmission[site]
 
                     if grid_case == 'off-grid' or 'hybrid-grid-'+retail_string:
                         ax[axi1,axi2].bar(labels,wind_capex_FOM[site],width,bottom=barbottom,label = 'Wind CAPEX & FOM',edgecolor='deepskyblue',color='deepskyblue')

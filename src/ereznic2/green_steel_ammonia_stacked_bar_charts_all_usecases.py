@@ -16,8 +16,8 @@ electrolysis_directory = 'Results_main/Fin_sum'
 sensitivity_directory = 'Results_sensitivity/Fin_sum'
 smr_directory = 'Results_SMR/Fin_sum'
 atr_directory = 'REsults_ATR/Fin_sum'
-#plot_directory = 'Plots'
-plot_directory = 'Plots-for-others'
+plot_directory = 'Plots'
+#plot_directory = 'Plots-for-others'
 
 
 # Retail price of interest ['retail-flat','wholesale']
@@ -118,17 +118,17 @@ tickfontsize = 16
 resolution = 150
 
 locations = [
-            #'IN',
+            'IN',
             'TX',
-            #'IA',
-            #'MS',
-            #'MN'
+            'IA',
+            'MS',
+            'MN'
              ]
 years = [
-    #'2022',
-    #'2025',
+    '2022',
+    '2025',
     '2030',
-    #'2035'
+    '2035'
     ]
 
 production_cost = False
