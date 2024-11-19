@@ -161,7 +161,7 @@ steel_CO2_prod = 174.66	# kg of CO2 emission/metric tonne of annual steel slab p
 
 steel_NG_supply_EI  = NG_supply_EI    # Natural gas extraction and supply to plant assuming 2% CH4 leakage rate (g CO2e/MJ)
 steel_lime_EI = 1.28   # kg CO2e/kg lime
-steel_iron_ore_EI = 0.46 # kg CO2e/kg iron ore
+steel_iron_ore_EI = 0.048 # kg CO2e/kg iron ore
 steel_H2O_EI = 0.0013 # kg CO2e/gal H2O (conservative)
 gal_to_ton_conv = 0.001336 # for water conversions
 
