@@ -17,8 +17,8 @@ warnings.simplefilter("ignore",UserWarning)
 Scenario1 = 'Green_steel_ammonia_electrolysis'
 #Scenario1 = 'Green_steel_ammonia_smr'
 
-dir0 = 'Results_main\\Fin_sum\\'
-#dir0 = 'Results_sensitivity\\Fin_sum\\' 
+#dir0 = 'Results_main\\Fin_sum\\'
+dir0 = 'Results_sensitivity\\Fin_sum\\' 
 #dir0 = 'Results_SMR\\Fin_sum\\'
 #dir0 = 'Results_ATR\\Fin_sum\\'
 #dir0 = 'examples\\H2_Analysis\\Phase1B\\Fin_sum_sens\\' 

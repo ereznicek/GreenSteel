@@ -176,9 +176,15 @@ for axi1,site in enumerate(locations):
         ax[axi1,axi2].bar(labels,hydrogen_scope_3,bottom=barbottom,label = 'GHG Scope 3 Emissions',edgecolor='black',color = 'navy')
         barbottom=barbottom+hydrogen_scope_3
 
+        #Plot column title
+        if atb_year == 2022:
+            plot_title = 'Current'
+        else:
+            plot_title = str(atb_year)
+
         # Decorations
         if axi1==0:
-            ax[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax[axi1,axi2].set_title(plot_title,fontsize=title_size)
         ax[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax[axi1,axi2].set_ylabel(location_strings[site] + '\n H2 Emissions \n (kg-CO2/kg-H2)', fontname = font, fontsize = axis_label_size)
@@ -196,7 +202,7 @@ for axi1,site in enumerate(locations):
 
         # Decorations
         if axi1==0:
-            ax1[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax1[axi1,axi2].set_title(plot_title,fontsize=title_size)
         ax1[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax1[axi1,axi2].set_ylabel(location_strings[site] + '\n Steel Emissions \n (kg-CO2/tonne-steel)', fontname = font, fontsize = axis_label_size)
@@ -214,7 +220,7 @@ for axi1,site in enumerate(locations):
 
         # Decorations
         if axi1==0:
-            ax2[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax2[axi1,axi2].set_title(plot_title,fontsize=title_size)
         ax2[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax2[axi1,axi2].set_ylabel(location_strings[site] + '\n Ammonia Emissions \n (kg-CO2/kg-NH3)', fontname = font, fontsize = axis_label_size)

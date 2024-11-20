@@ -160,6 +160,12 @@ for axi1,policy in enumerate(policy_cases):
                
         labels  = pd.unique(policy_year_combined['Label'].values.tolist())
 
+        #Plot column title
+        if atb_year == '2022':
+            column_title = 'Current'
+        else:
+            column_title = atb_year
+
         if atb_year != '2035' or (atb_year == '2035' and policy == 'no-policy'):
             ax[axi1,axi2].plot(labels,policy_year_combined.loc[policy_year_combined['Site']=='IN','LCOH ($/kg)'],label='Indiana',marker='o',ms = marker_size,color='purple',linestyle='')
             ax[axi1,axi2].plot(labels,policy_year_combined.loc[policy_year_combined['Site']=='TX','LCOH ($/kg)'],label='Texas',marker='v',ms = marker_size,color='darkred',linestyle='')
@@ -169,7 +175,7 @@ for axi1,policy in enumerate(policy_cases):
             h2_handles,h2_labels = ax[axi1,axi2].get_legend_handles_labels()
 
         if axi1==0:
-            ax[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax[axi1,axi2].set_title(column_title,fontsize=title_size)
         ax[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax[axi1,axi2].set_ylabel('LCOH ($/kg) \n' + policy_strings[policy], fontname = font, fontsize = axis_label_size)
@@ -189,7 +195,7 @@ for axi1,policy in enumerate(policy_cases):
             steel_handles,steel_labels = ax1[axi1,axi2].get_legend_handles_labels()
 
         if axi1==0:
-            ax1[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax1[axi1,axi2].set_title(column_title,fontsize=title_size)
         ax1[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.25)
         if axi2==0:
             ax1[axi1,axi2].set_ylabel('Break-even steel price ($/tonne) \n' + policy_strings[policy], fontname = font, fontsize = axis_label_size)
@@ -208,7 +214,7 @@ for axi1,policy in enumerate(policy_cases):
             ammonia_handles,ammonia_labels = ax2[axi1,axi2].get_legend_handles_labels()
 
         if axi1==0:
-            ax2[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax2[axi1,axi2].set_title(column_title,fontsize=title_size)
         ax2[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax2[axi1,axi2].set_ylabel('Break-even ammonia price ($/kg) \n' + policy_strings[policy], fontname = font, fontsize = axis_label_size)

@@ -135,7 +135,7 @@ axis_label_size = 14
 legend_size = 12
 tick_size = 14
 tickfontsize = 14
-resolution = 150
+resolution = 300
 
 fig,ax=plt.subplots(len(locations),len(years),sharex=True,sharey=True,dpi= resolution)
 fig.tight_layout()
@@ -384,7 +384,8 @@ for axi1,site in enumerate(locations):
         #ax[axi1,axi2].bar(labels,lcoh_nopolicy,label='Without Policy',edgecolor=['midnightblue','darkmagenta','goldenrod','forestgreen','darkorange','deepskyblue','darkred','cyan','salmon'],color=['midnightblue','darkmagenta','goldenrod','forestgreen','darkorange','deepskyblue','darkred','cyan','salmon'])
         ax[axi1,axi2].bar(labels,lcoh_nopolicy,label='Without Policy',edgecolor=['midnightblue','darkmagenta','darkred','goldenrod','forestgreen','deepskyblue'],color=['midnightblue','darkmagenta','darkred','goldenrod','forestgreen','deepskyblue'])
         ax[axi1,axi2].plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_base_policy_savings, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax[axi1,axi2].plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_max_policy_savings, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        #ax[axi1,axi2].plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_max_policy_savings, color='dimgray', marker='s', linestyle='none', markersize=2,label='Max Policy')
+        ax[axi1,axi2].plot([0,1,2,3,4,5], lcoh_nopolicy-lcoh_max_policy_savings, color='black', marker='s', linestyle='none', markersize=3,label='Max Policy')
         
         # Plot NG error bars
         ax[axi1,axi2].errorbar(labels,lcoh_nopolicy,yerr=[error_lcoh_low,error_lcoh_high], fmt='none',elinewidth=1.25,ecolor='dimgray',capsize=10,markeredgewidth=1.25)
@@ -392,16 +393,24 @@ for axi1,site in enumerate(locations):
         arrow_top = np.zeros(len(labels))
         ax[axi1,axi2].errorbar(labels,lcoh_nopolicy,yerr=[arrow_top,arrow_top], fmt='none',elinewidth=1,ecolor='black',capsize=10,markeredgewidth=1.25) 
         for j in range(len(labels)): 
-            ax[axi1,axi2].arrow(j,lcoh_nopolicy[j],0,-1*lcoh_base_policy_savings[j],head_width=0.1,head_length=0.25,length_includes_head=True,color='black',linestyle='-')
-            ax[axi1,axi2].arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.1,head_length=0.25,length_includes_head=True,color='dimgray')
+            ax[axi1,axi2].arrow(j,lcoh_nopolicy[j],0,-1*lcoh_base_policy_savings[j],head_width=0.15,head_length=0.45,length_includes_head=True,color='black',linestyle='-')
+            #ax[axi1,axi2].arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.1,head_length=0.25,length_includes_head=True,color='dimgray')
+            ax[axi1,axi2].arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.1,head_length=0,length_includes_head=True,color='black',linestyle='dotted')
+            ax[axi1,axi2].arrow(j,lcoh_nopolicy[j]-lcoh_base_policy_savings[j],0,-1*(lcoh_max_policy_savings[j]-lcoh_base_policy_savings[j]),head_width=0.15,head_length=0.45,length_includes_head=True,color='black',linestyle='dotted',linewidth=0.01)
         ax[axi1,axi2].axhline(y=0, color='k', linestyle='-',linewidth=1.5)
         #ax[axi1,axi2].axhline(y=lcoh_nopolicy[0], color='k', linestyle='--',linewidth=1.5)
         barbottom = lcoh_nopolicy
 
+        #Plot column title
+        if atb_year == '2022':
+            column_title = 'Current'
+        else:
+            column_title = atb_year
+
         # Decorations
         #ax[axi1,axi2].set_title(scenario_title, fontsize=title_size)
         if axi1==0:
-            ax[axi1,axi2].set_title(str(atb_year),fontsize=title_size)
+            ax[axi1,axi2].set_title(column_title,fontsize=title_size)
         ax[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax[axi1,axi2].set_ylabel(location_strings[site] + ' \n LCOH ($/kg)', fontname = font, fontsize = axis_label_size)
@@ -521,7 +530,7 @@ for axi1,site in enumerate(locations):
         #ax.errorbar(labels[5],barbottom[5]-integration_savings[5]-policy_savings[5],yerr=[[error_low[5]],[error_high[5]]],fmt='none',elinewidth=1,capsize=6,markeredgewidth=1,ecolor='black')                                        
 
         ax1[axi1,axi2].plot([0,1,2,3,4,5], steel_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax1[axi1,axi2].plot([0,1,2,3,4,5], steel_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        ax1[axi1,axi2].plot([0,1,2,3,4,5], steel_price_max_policy, color='black', marker='s', linestyle='none', markersize=3,label='Max Policy')
 
         # Plot NG error bars
         ax1[axi1,axi2].errorbar(labels,steel_price_no_policy,yerr=[error_lcos_low,error_lcos_high], fmt='none',elinewidth=1,ecolor='dimgray',capsize=6,markeredgewidth=1.25)
@@ -529,8 +538,10 @@ for axi1,site in enumerate(locations):
         arrow_top = np.zeros(len(labels))
         ax1[axi1,axi2].errorbar(labels,steel_price_no_policy,yerr=[arrow_top,arrow_top],fmt='none',elinewidth=1,ecolor='black',capsize=6,markeredgewidth=1.25)
         for j in range(len(labels)):
-            ax1[axi1,axi2].arrow(j,barbottom[j],0,-1*steel_price_base_policy_savings[j],head_width=0.1,head_length=35,length_includes_head=True,color='black')
-            ax1[axi1,axi2].arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=35,length_includes_head=True,color='dimgray')
+            ax1[axi1,axi2].arrow(j,barbottom[j],0,-1*steel_price_base_policy_savings[j],head_width=0.1,head_length=55,length_includes_head=True,color='black')
+            #ax1[axi1,axi2].arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=35,length_includes_head=True,color='dimgray')
+            ax1[axi1,axi2].arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=0,length_includes_head=True,color='black',linestyle='dotted')
+            ax1[axi1,axi2].arrow(j,barbottom[j]-steel_price_base_policy_savings[j],0,-1*(steel_price_max_policy_savings[j]-steel_price_base_policy_savings[j]),head_width=0.1,head_length=55,length_includes_head=True,color='black',linestyle='dotted',linewidth=0.01)
 
         #ax1[axi1,axi2].axhline(y=barbottom[0], color='k', linestyle='--',linewidth=1.5)
 
@@ -546,7 +557,7 @@ for axi1,site in enumerate(locations):
 
         # Decorations
         if axi1==0:
-            ax1[axi1,axi2].set_title(str(atb_year), fontsize=title_size)
+            ax1[axi1,axi2].set_title(column_title, fontsize=title_size)
         ax1[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax1[axi1,axi2].set_ylabel(location_strings[site] +' \n LCOS ($/tonne steel)', fontname = font, fontsize = axis_label_size)
@@ -649,7 +660,7 @@ for axi1,site in enumerate(locations):
 
 
         ax2[axi1,axi2].plot([0,1,2,3,4,5], ammonia_price_base_policy, color='black', marker='o', linestyle='none', markersize=3,label='Base Policy')
-        ax2[axi1,axi2].plot([0,1,2,3,4,5], ammonia_price_max_policy, color='dimgray', marker='s', linestyle='none', markersize=3,label='Max Policy')
+        ax2[axi1,axi2].plot([0,1,2,3,4,5], ammonia_price_max_policy, color='black', marker='s', linestyle='none', markersize=3,label='Max Policy')
 
         # Plot NG error bars
         ax2[axi1,axi2].errorbar(labels,ammonia_price_no_policy,yerr=[error_lcoa_low,error_lcoa_high], fmt='none',elinewidth=1,ecolor='dimgray',capsize=6,markeredgewidth=1.25)
@@ -657,8 +668,12 @@ for axi1,site in enumerate(locations):
         arrow_top = np.zeros(len(labels))
         ax2[axi1,axi2].errorbar(labels,barbottom,yerr=[arrow_top,arrow_top],fmt='none',elinewidth=1,ecolor='black',capsize=6,markeredgewidth=1.25)
         for j in range(len(labels)):
-            ax2[axi1,axi2].arrow(j,barbottom[j],0,-1*ammonia_price_base_policy_savings[j],head_width=0.1,head_length=0.08,length_includes_head=True,color='black')
-            ax2[axi1,axi2].arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0.08,length_includes_head=True,color='dimgray')
+            ax2[axi1,axi2].arrow(j,barbottom[j],0,-1*ammonia_price_base_policy_savings[j],head_width=0.1,head_length=0.1,length_includes_head=True,color='black')
+            #ax2[axi1,axi2].arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0.08,length_includes_head=True,color='dimgray')
+            ax2[axi1,axi2].arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0,length_includes_head=True,color='black',linestyle='dotted')
+            ax2[axi1,axi2].arrow(j,barbottom[j]-ammonia_price_base_policy_savings[j],0,-1*(ammonia_price_max_policy_savings[j]-ammonia_price_base_policy_savings[j]),head_width=0.1,head_length=0.1,length_includes_head=True,color='black',linestyle='dotted',linewidth=0.01)
+
+        
         #ax.errorbar(labels,barbottom-policy_savings_ammonia,yerr=[error_low,error_high], fmt='none',elinewidth=[0,0,0,0,0,1],ecolor='none',capsize=6,markeredgewidth=1)                                        
         #ax.errorbar(labels[5],barbottom[5]-policy_savings_ammonia[5],yerr=[[error_low[5]],[error_high[5]]],fmt='none',elinewidth=1,capsize=6,markeredgewidth=1,ecolor='black')                                        
         ax2[axi1,axi2].axhline(y=0.0, color='k', linestyle='-',linewidth=1.5)
@@ -667,7 +682,7 @@ for axi1,site in enumerate(locations):
         
         # Decorations
         if axi1==0:
-            ax2[axi1,axi2].set_title(str(atb_year), fontsize=title_size)
+            ax2[axi1,axi2].set_title(column_title, fontsize=title_size)
         ax2[axi1,axi2].spines[['left','top','right','bottom']].set_linewidth(1.5)
         if axi2==0:
             ax2[axi1,axi2].set_ylabel(location_strings[site]+' \n LCOA ($/kg-NH3)', fontname = font, fontsize = axis_label_size)
