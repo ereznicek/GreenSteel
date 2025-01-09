@@ -144,7 +144,7 @@ ely_PO_consume      = 54.61       # kWh/kg H2
 
 NH3_PO_consume = 0.0609      # Electricity usage (kWh/kg NH3)
 NH3_H2_consume = 0.2         # Hydrogen consumption (kg H2/kg NH3)
-NH3_boiler_EI  = 0.463       # Boiler combustion of methane (kg CO2e/kg NH3)
+NH3_boiler_EI  = 0       # Boiler combustion of methane (kg CO2e/kg NH3)
 
 #------------------------------------------------------------------------------
 # Steel
